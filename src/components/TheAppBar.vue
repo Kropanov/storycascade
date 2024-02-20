@@ -2,11 +2,10 @@
   <header>
     <div class="pull-left">
       <img id="logo" src="" alt="Logo" />
-      <nav>
-        <router-link to="/file">File</router-link> | <router-link to="/edit">Edit</router-link> |
-        <router-link to="/insert">Insert</router-link> |
-        <router-link to="/format">Format</router-link>
-      </nav>
+      <button class="btn" v-on:click="test">File</button>
+      <button class="btn">Edit</button>
+      <button class="btn">Insert</button>
+      <button class="btn">Format</button>
     </div>
     <div class="pull-right">
       <img id="download" src="../assets/download.gif" height="20px" width="20px" alt="Download" />
@@ -24,6 +23,11 @@ export default {
       darkTheme: true,
     };
   },
+  methods: {
+    test() {
+      console.log('click');
+    },
+  },
 };
 </script>
 
@@ -38,7 +42,7 @@ header {
   & .pull-left {
     display: flex;
     & #logo {
-      margin: 0 15px 0 15px;
+      margin: 0 20px 0 20px;
     }
 
     & nav {
@@ -49,6 +53,17 @@ header {
   & .pull-right {
     display: flex;
     align-items: center;
+  }
+}
+
+.btn {
+  font-size: 14px;
+  height: 100%;
+  border: none;
+  background: white;
+  cursor: pointer;
+  &:hover {
+    background: rgba(44, 43, 43, 0.11);
   }
 }
 
@@ -75,13 +90,5 @@ header {
 
 nav {
   margin-right: 10px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
