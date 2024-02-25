@@ -37,10 +37,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid rgba(42, 51, 52, 0.34);
+  border-bottom: 1px solid rgba(221, 221, 221, 0.8666666667);
 
   & .pull-left {
     display: flex;
+
     & #logo {
       margin: 0 20px 0 20px;
     }

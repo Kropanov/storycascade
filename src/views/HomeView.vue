@@ -1,5 +1,11 @@
 <template>
-  <div class="home"></div>
+  <TheAppCanvas />
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+import TheAppCanvas from '@/components/TheAppSheet.vue';
+
+export default {
+  components: { TheAppCanvas },
+};
+</script>
