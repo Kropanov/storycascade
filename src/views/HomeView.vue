@@ -1,11 +1,11 @@
 <template>
-  <TheAppCanvas />
+  <AppBar />
 </template>
 
 <script lang="ts">
-import TheAppCanvas from '@/components/TheAppSheet.vue';
+import AppBar from '@/components/AppBar.vue';
 
 export default {
-  components: { TheAppCanvas },
+  components: { AppBar },
 };
 </script>
