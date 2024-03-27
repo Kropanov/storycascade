@@ -34,7 +34,7 @@ To run these projects locally, follow these steps:
 1. Clone this repository to your local machine.
 2. Navigate to the `client` directory and the `server` directory separately.
 3. Install dependencies for both projects using `npm install`.
-4. Configure environment variables for the server (e.g., MongoDB connection string, JWT secret).
+4. Configure environment variables for the server (e.g., Redis connection string, JWT secret).
 5. Start the server by running `npm start:dev` in the `server` directory.
 6. Start the client by running `npm run dev` in the `client` directory.
 7. Access the application in your web browser at `http://localhost:3000` for the client and `http://localhost:4000` for the server.
