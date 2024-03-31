@@ -13,7 +13,7 @@ export function useFetch(url) {
     const urlValue = toValue(url);
 
     try {
-      const res = await fetch('/api/v1' + urlValue);
+      const res = await fetch('api/v1' + urlValue);
       data.value = await res.json();
     } catch (e) {
       error.value = e;

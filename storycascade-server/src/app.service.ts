@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import PostgresService from './db';
 
 @Injectable()
 export class AppService {
-  getHello(): object {
+  async getHello(): Promise<object> {
+    const postgres = new PostgresService();
+    const res = await postgres.query('SELECT * FROM novel where id = 4 LIMIT 100', []);
+    console.log(res.rows[0]);
     return [
       {
         title: 'Second World',
