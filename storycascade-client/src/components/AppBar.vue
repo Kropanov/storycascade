@@ -21,8 +21,12 @@
     </v-btn-group>
   </v-app-bar>
 
-  <v-navigation-drawer v-model="drawer" temporary>
-    <!--  -->
+  <v-navigation-drawer v-model="drawer" temporary permanent>
+    <v-list density="compact" nav>
+      <v-list-item title="Home" @click="$router.push({ path: '/' })" prepend-icon="mdi-home" value=""></v-list-item>
+      <v-list-item prepend-icon="mdi-library" title="Library" link value="library"></v-list-item>
+      <v-list-item prepend-icon="mdi-pen" title="Your projects" link value="about"></v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
