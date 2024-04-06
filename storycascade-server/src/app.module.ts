@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { NovelsModule } from './novels/novels.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -8,6 +10,8 @@ import { NovelsModule } from './novels/novels.module';
       envFilePath: '.env.local',
     }),
     NovelsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
