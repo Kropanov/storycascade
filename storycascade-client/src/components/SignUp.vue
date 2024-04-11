@@ -1,10 +1,10 @@
 <template>
   <v-card width="450" prepend-icon="mdi-account" title="Create a new account">
-    <form class="mt-3 pl-2 pr-2" @submit.prevent="submit">
+    <form class="mt-3 pl-2 pr-2" @submit.prevent="submitForm">
       <v-text-field
-        v-model="name.value.value"
+        v-model="username.value.value"
         :counter="10"
-        :error-messages="name.errorMessage.value"
+        :error-messages="username.errorMessage.value"
         label="User name"
       ></v-text-field>
 
@@ -31,7 +31,7 @@
       <v-divider></v-divider>
 
       <v-btn-group variant="elevated" class="mb-2 mt-2 w-100">
-        <v-btn @click="handleReset"> clear </v-btn>
+        <v-btn @click="resetForm"> clear </v-btn>
         <v-btn class="ms-auto" type="submit" size="small"> Create An Account </v-btn>
       </v-btn-group>
     </form>
@@ -39,47 +39,48 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
 import { useField, useForm } from 'vee-validate';
+import { ref, watchEffect } from 'vue';
+import { useFetch } from '@/util/fetch';
 
-const emit = defineEmits(['closeDialog']);
+const emit = defineEmits(['closeDialog', 'login']);
 
-const { handleSubmit, handleReset } = useForm({
+const url = ref('/auth/signup');
+
+const { handleSubmit, resetForm } = useForm({
   validationSchema: {
-    name(value) {
-      if (value?.length >= 2) return true;
-
-      return 'Name needs to be at least 2 characters.';
-    },
-    email(value) {
-      if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true;
-
-      return 'Must be a valid e-mail.';
-    },
-    password(value) {
-      if (value?.length >= 1) return true;
-
-      return 'Must contain a value.';
-    },
+    username: (value) => (value && value.length >= 2) || 'Name needs to be at least 2 characters.',
+    email: (value) => /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value) || 'Must be a valid e-mail.',
+    password: (value) => (value && value.length > 0) || 'Must contain a value.',
     repeatPassword(value) {
       if (!value) return 'Must contain a value.';
-
       if (value === password.value.value) return true;
-
       return 'Must match the password';
     },
   },
 });
 
-const name = useField('name');
+const username = useField('username');
 const email = useField('email');
 const password = useField('password');
 const repeatPassword = useField('repeatPassword');
 
-const submit = handleSubmit((values) => {
-  // alert(JSON.stringify(values, null, 2));
-  console.log(values);
-  emit('closeDialog');
+const submitForm = handleSubmit((values) => {
+  const { data, error } = useFetch(url, { body: JSON.stringify(values), method: 'POST' });
+
+  // FIXME: fix this piece of code
+  watchEffect(() => {
+    if (error.value) {
+      console.error('Error:', error.value);
+      emit('closeDialog');
+    }
+
+    if (data.value !== null) {
+      emit('login');
+      emit('closeDialog');
+      console.log('Form submitted with:', data.value);
+    }
+  });
 });
 </script>
 

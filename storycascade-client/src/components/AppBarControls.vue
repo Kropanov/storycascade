@@ -17,7 +17,7 @@
     </v-dialog>
 
     <v-dialog v-model="signUpDialog" width="auto">
-      <SignUp @closeDialog="signUpDialog = false" />
+      <SignUp @closeDialog="signUpDialog = false" @login="isLoggedIn = true" />
     </v-dialog>
   </v-btn-group>
 </template>

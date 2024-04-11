@@ -25,35 +25,38 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
 import { useField, useForm } from 'vee-validate';
+import { useFetch } from '@/util/fetch';
+import { ref, watchEffect } from 'vue';
 
 const emit = defineEmits(['closeDialog', 'login']);
+const url = ref('/auth/login');
 
 const { handleSubmit, handleReset } = useForm({
   validationSchema: {
-    email(value) {
-      if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true;
-
-      return 'Must be a valid e-mail.';
-    },
-    password(value) {
-      if (value?.length >= 1) return true;
-
-      return 'Must contain a value.';
-    },
+    email: (value) => /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value) || 'Must be a valid e-mail.',
+    password: (value) => (value && value.length > 0) || 'Must contain a value.',
   },
 });
 
 const email = useField('email');
 const password = useField('password');
 
-const submit = handleSubmit((values) => {
-  // alert(JSON.stringify(values, null, 2));
-  console.log(values);
-  emit('closeDialog');
-  // for testing
-  emit('login');
+const submit = handleSubmit(async (values) => {
+  const { data, error } = useFetch(url, { method: 'POST', body: JSON.stringify(values) });
+
+  // FIXME: fix this piece of code
+  watchEffect(() => {
+    if (error.value) {
+      console.error('Error:', error.value);
+    }
+
+    if (data.value !== null) {
+      emit('login');
+      emit('closeDialog');
+      console.log('Form submitted with:', data.value);
+    }
+  });
 });
 </script>
 
