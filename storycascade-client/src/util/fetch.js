@@ -1,9 +1,19 @@
 // fetch.js
 import { ref, watchEffect, toValue } from 'vue';
 
-export function useFetch(url) {
+const defaultOptions = {
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  method: 'GET',
+};
+
+export function useFetch(url, options) {
   const data = ref(null);
   const error = ref(null);
+
+  const mergedOptions = { ...defaultOptions, ...options };
 
   watchEffect(async () => {
     // reset state before fetching..
@@ -13,7 +23,7 @@ export function useFetch(url) {
     const urlValue = toValue(url);
 
     try {
-      const res = await fetch('api/v1' + urlValue);
+      const res = await fetch('api/v1' + urlValue, mergedOptions);
       data.value = await res.json();
     } catch (e) {
       error.value = e;

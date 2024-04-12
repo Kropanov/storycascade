@@ -5,6 +5,7 @@ import { UpdateNovelDto } from './dto/update-novel.dto';
 
 @Controller('novels')
 export class NovelsController {
+  // TODO: append async to methods
   constructor(private readonly novelsService: NovelsService) {}
 
   @Post()
