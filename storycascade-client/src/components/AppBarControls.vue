@@ -10,7 +10,7 @@
       <v-btn @click="signUpDialog = true">Sign Up</v-btn>
     </template>
 
-    <v-btn icon="mdi-account" v-if="isLoggedIn"></v-btn>
+    <v-btn icon="mdi-account" v-if="isLoggedIn" @click="$router.push({ path: 'profile' })"></v-btn>
 
     <v-dialog v-model="loginDialog" width="auto">
       <Login @closeDialog="loginDialog = false" @login="isLoggedIn = true" />
