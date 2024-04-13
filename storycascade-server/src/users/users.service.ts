@@ -26,9 +26,21 @@ export class UsersService {
     return res.rows;
   }
 
-  async findOne(id: number) {
-    const res = await this.postgres.query('SELECT * FROM users WHERE id = $1', [id]);
-    return res.rows;
+  async findOne(identifier: number | string, type: 'id' | 'email' | 'username'): Promise<CreateUserDto> {
+    const queryMap = {
+      id: 'SELECT * FROM users WHERE id = $1',
+      email: 'SELECT * FROM users WHERE email = $1',
+      name: 'SELECT * FROM users WHERE username = $1',
+    };
+
+    const query = queryMap[type];
+
+    if (!query) {
+      throw new Error('Unsupported type');
+    }
+
+    const res = await this.postgres.query(query, [identifier]);
+    return res.rows[0];
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -44,10 +56,5 @@ export class UsersService {
   async remove(id: number) {
     const res = await this.postgres.query('DELETE FROM users WHERE id = $1', [id]);
     return res.rows;
-  }
-
-  async findByUsername(username: string): Promise<CreateUserDto> {
-    const res = await this.postgres.query('SELECT * FROM users WHERE username = $1', [username]);
-    return res.rows[0];
   }
 }

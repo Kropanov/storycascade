@@ -7,9 +7,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  // FIXME: remove username -> add email
-  async login(@Body() credentials: { username: string; password: string }) {
-    const user = await this.authService.validateUser(credentials.username, credentials.password);
+  async login(@Body() credentials: { email: string; password: string }) {
+    const user = await this.authService.validateUser(credentials.email, credentials.password);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
