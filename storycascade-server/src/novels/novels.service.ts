@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNovelDto } from './dto/create-novel.dto';
 import { UpdateNovelDto } from './dto/update-novel.dto';
-import PostgresService from '../database';
+import { PostgresService } from '../database/database.service';
 
 @Injectable()
 export class NovelsService {
