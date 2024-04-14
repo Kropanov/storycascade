@@ -1,9 +1,6 @@
 <template>
   <v-btn-group class="btn-group">
-    <v-btn
-      :icon="theme.global.current.value.dark ? 'mdi-white-balance-sunny' : 'mdi-brightness-4'"
-      @click="toggleTheme"
-    ></v-btn>
+    <ThemeSwitcher />
 
     <template v-if="!isLoggedIn">
       <v-btn @click="loginDialog = true">Log In</v-btn>
@@ -24,18 +21,13 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useTheme } from 'vuetify';
 import Login from '@/components/Login.vue';
 import SignUp from '@/components/SignUp.vue';
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue';
 
-const theme = useTheme();
 const isLoggedIn = ref(false);
 const loginDialog = ref(false);
 const signUpDialog = ref(false);
-
-const toggleTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
-};
 </script>
 
 <style scoped>
