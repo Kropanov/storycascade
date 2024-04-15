@@ -10,7 +10,7 @@ import 'vuetify/styles';
 
 import { createVuetify } from 'vuetify';
 
-const light = {
+const custom = {
   dark: false,
   colors: {
     background: '#50687f',
@@ -51,7 +51,7 @@ export default createVuetify({
   theme: {
     defaultTheme: 'dark',
     themes: {
-      light,
+      custom,
     },
   },
 });

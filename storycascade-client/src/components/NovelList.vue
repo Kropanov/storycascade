@@ -22,7 +22,7 @@ import { useFetch } from '@/util/fetch';
 
 const cards = ref([]);
 const loading = ref(false);
-const url = ref('/test');
+const url = ref('/novels');
 
 loading.value = true;
 
