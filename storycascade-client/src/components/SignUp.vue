@@ -28,6 +28,7 @@
         type="password"
       ></v-text-field>
 
+      <SocialLoginButtons />
       <v-divider></v-divider>
 
       <v-btn-group variant="elevated" class="mb-2 mt-2 w-100">
@@ -42,6 +43,7 @@
 import { useField, useForm } from 'vee-validate';
 import { ref, watchEffect } from 'vue';
 import { useFetch } from '@/util/fetch';
+import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
 
 const emit = defineEmits(['closeDialog', 'login']);
 
