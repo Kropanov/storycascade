@@ -30,9 +30,11 @@ import { useField, useForm } from 'vee-validate';
 import { useFetch } from '@/util/fetch';
 import { ref, watchEffect } from 'vue';
 import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
+import { useAppStore } from '@/stores/app';
 
-const emit = defineEmits(['closeDialog', 'login']);
+const store = useAppStore();
 const url = ref('/auth/login');
+const emit = defineEmits(['closeDialog', 'login']);
 
 const { handleSubmit, handleReset } = useForm({
   validationSchema: {
@@ -56,7 +58,7 @@ const submit = handleSubmit(async (values) => {
     if (data.value !== null) {
       emit('login');
       emit('closeDialog');
-      console.log('Form submitted with:', data.value);
+      store.setUser(data.value);
     }
   });
 });
