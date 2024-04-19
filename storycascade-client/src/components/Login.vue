@@ -27,10 +27,11 @@
 
 <script setup>
 import { useField, useForm } from 'vee-validate';
-import { useFetch } from '@/util/fetch';
+import { useFetch } from '@/utils/fetch';
 import { ref, watchEffect } from 'vue';
 import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
 import { useAppStore } from '@/stores/app';
+import { TOKEN } from '@/utils/constants';
 
 const store = useAppStore();
 const url = ref('/auth/login');
@@ -49,18 +50,30 @@ const password = useField('password');
 const submit = handleSubmit(async (values) => {
   const { data, error } = useFetch(url, { method: 'POST', body: JSON.stringify(values) });
 
-  // FIXME: fix this piece of code
   watchEffect(() => {
     if (error.value) {
-      console.error('Error:', error.value);
+      console.error('Error:', error);
     }
 
     if (data.value !== null) {
-      emit('login');
-      emit('closeDialog');
-      store.setUser(data.value);
+      performLoginActions();
+      storeUserData();
+      saveTokenToLocalStorage();
     }
   });
+
+  const performLoginActions = () => {
+    emit('login');
+    emit('closeDialog');
+  };
+
+  const storeUserData = () => {
+    store.setUser(data.value);
+  };
+
+  const saveTokenToLocalStorage = () => {
+    localStorage[TOKEN] = data.value.token;
+  };
 });
 </script>
 

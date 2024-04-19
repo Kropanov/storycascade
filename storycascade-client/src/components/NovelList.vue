@@ -18,7 +18,7 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import NovelListItem from '@/components/NovelListItem.vue';
-import { useFetch } from '@/util/fetch';
+import { useFetch } from '@/utils/fetch';
 
 const cards = ref([]);
 const loading = ref(false);
