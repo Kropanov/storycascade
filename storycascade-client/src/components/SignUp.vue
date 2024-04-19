@@ -42,7 +42,7 @@
 <script setup>
 import { useField, useForm } from 'vee-validate';
 import { ref, watchEffect } from 'vue';
-import { useFetch } from '@/util/fetch';
+import { useFetch } from '@/utils/fetch';
 import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
 
 const emit = defineEmits(['closeDialog', 'login']);
