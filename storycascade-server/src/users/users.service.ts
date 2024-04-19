@@ -13,16 +13,17 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const { username, email, password_hash } = createUserDto;
-    const res = await this.postgres.query('INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3)', [
+    await this.postgres.query('INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3)', [
       username,
       email,
       password_hash,
     ]);
-    return res.rows;
+
+    return { message: 'User was created!' };
   }
 
   async findAll() {
-    const res = await this.postgres.query('SELECT * FROM users', []);
+    const res = await this.postgres.query('SELECT id, username, email FROM users', []);
     return res.rows;
   }
 
@@ -40,21 +41,28 @@ export class UsersService {
     }
 
     const res = await this.postgres.query(query, [identifier]);
-    return res.rows[0];
+    const user = res.rows[0];
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const { username, email, password_hash } = updateUserDto;
-    return await this.postgres.query('UPDATE users SET username = $1, email = $2, password_hash = $3 WHERE id = $4', [
+    await this.postgres.query('UPDATE users SET username = $1, email = $2, password_hash = $3 WHERE id = $4', [
       username,
       email,
       password_hash,
       id,
     ]);
+
+    return { message: 'User was updated!' };
   }
 
   async remove(id: number) {
-    const res = await this.postgres.query('DELETE FROM users WHERE id = $1', [id]);
-    return res.rows;
+    await this.postgres.query('DELETE FROM users WHERE id = $1', [id]);
+    return { message: 'User was deleted!' };
   }
 }
