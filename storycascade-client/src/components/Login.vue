@@ -28,7 +28,7 @@
 <script setup>
 import { useField, useForm } from 'vee-validate';
 import { useFetch } from '@/utils/fetch';
-import { ref, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
 import { useAppStore } from '@/stores/app';
 import { TOKEN } from '@/utils/constants';
@@ -50,17 +50,25 @@ const password = useField('password');
 const submit = handleSubmit(async (values) => {
   const { data, error } = useFetch(url, { method: 'POST', body: JSON.stringify(values) });
 
-  watchEffect(() => {
-    if (error.value) {
-      console.error('Error:', error);
-    }
+  watch(
+    () => error.value,
+    () => {
+      showError();
+    },
+  );
 
-    if (data.value !== null) {
+  watch(
+    () => data.value,
+    () => {
       performLoginActions();
       storeUserData();
       saveTokenToLocalStorage();
-    }
-  });
+    },
+  );
+
+  const showError = () => {
+    console.log(error.value);
+  };
 
   const performLoginActions = () => {
     emit('login');
