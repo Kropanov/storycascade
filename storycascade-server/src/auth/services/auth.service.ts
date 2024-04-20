@@ -4,7 +4,7 @@ import { CreateUserDto } from '../../users/dto/create-user.dto';
 import { BcryptService } from './bcrypt.service';
 import { JwtService } from './jwt.service';
 
-@Injectable()
+@Injectable() // FIXME: rework logic of this class
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
@@ -24,6 +24,14 @@ export class AuthService {
   async logging(credentials: CreateUserDto): Promise<any> {
     const { username, email, password } = credentials;
     const password_hash = await this.bcryptService.hashPassword(password);
-    return await this.userService.create({ username, email, password_hash });
+    await this.userService.create({ username, email, password_hash });
+    const user = await this.userService.findOne(email, 'email');
+    const token = this.jwtService.createJwt(user.id);
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      token,
+    };
   }
 }
