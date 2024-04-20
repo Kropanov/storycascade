@@ -41,12 +41,14 @@
 
 <script setup>
 import { useField, useForm } from 'vee-validate';
-import { ref, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import { useFetch } from '@/utils/fetch';
 import SocialLoginButtons from '@/components/SocialLoginButtons.vue';
+import { TOKEN } from '@/utils/constants';
+import { useAppStore } from '@/stores/app';
 
 const emit = defineEmits(['closeDialog', 'login']);
-
+const store = useAppStore();
 const url = ref('/auth/signup');
 
 const { handleSubmit, resetForm } = useForm({
@@ -70,19 +72,38 @@ const repeatPassword = useField('repeatPassword');
 const submitForm = handleSubmit((values) => {
   const { data, error } = useFetch(url, { body: JSON.stringify(values), method: 'POST' });
 
-  // FIXME: fix this piece of code
-  watchEffect(() => {
-    if (error.value) {
-      console.error('Error:', error.value);
-      emit('closeDialog');
-    }
+  watch(
+    () => error.value,
+    () => {
+      showError();
+    },
+  );
 
-    if (data.value !== null) {
-      emit('login');
-      emit('closeDialog');
-      console.log('Form submitted with:', data.value);
-    }
-  });
+  watch(
+    () => data.value,
+    () => {
+      performLoginActions();
+      storeUserData();
+      saveTokenToLocalStorage();
+    },
+  );
+
+  const showError = () => {
+    console.log(error.value);
+  };
+
+  const performLoginActions = () => {
+    emit('login');
+    emit('closeDialog');
+  };
+
+  const storeUserData = () => {
+    store.setUser(data.value);
+  };
+
+  const saveTokenToLocalStorage = () => {
+    localStorage[TOKEN] = data.value.token;
+  };
 });
 </script>
 
