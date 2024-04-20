@@ -41,12 +41,7 @@ export class UsersService {
     }
 
     const res = await this.postgres.query(query, [identifier]);
-    const user = res.rows[0];
-    return {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
+    return res.rows[0];
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
