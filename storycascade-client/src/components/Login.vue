@@ -76,7 +76,7 @@ const submit = handleSubmit(async (values) => {
   };
 
   const storeUserData = () => {
-    store.setUser(data.value);
+    store.setUserData(data.value);
   };
 
   const saveTokenToLocalStorage = () => {
