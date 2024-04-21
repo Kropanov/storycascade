@@ -24,10 +24,12 @@ import { ref } from 'vue';
 import Login from '@/components/Login.vue';
 import SignUp from '@/components/SignUp.vue';
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue';
+import { TOKEN } from '@/utils/constants';
 
-const isLoggedIn = ref(false);
 const loginDialog = ref(false);
 const signUpDialog = ref(false);
+
+const isLoggedIn = ref(localStorage.getItem(TOKEN));
 </script>
 
 <style scoped>
