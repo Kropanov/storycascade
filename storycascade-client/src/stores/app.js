@@ -6,8 +6,11 @@ export const useAppStore = defineStore('app', {
     user: {},
   }),
   actions: {
-    setUser(value) {
+    setUserData(value) {
       this.user = { ...this.user, value };
+    },
+    clearUserData() {
+      this.user = {};
     },
   },
 });

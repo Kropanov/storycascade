@@ -19,7 +19,6 @@
 import { useAppStore } from '@/stores/app';
 
 const { user } = useAppStore();
-console.log(localStorage.getItem('token'));
 </script>
 
 <style scoped></style>

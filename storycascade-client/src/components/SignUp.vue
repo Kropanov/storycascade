@@ -98,7 +98,7 @@ const submitForm = handleSubmit((values) => {
   };
 
   const storeUserData = () => {
-    store.setUser(data.value);
+    store.setUserData(data.value);
   };
 
   const saveTokenToLocalStorage = () => {
