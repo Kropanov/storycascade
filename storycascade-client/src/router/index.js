@@ -13,7 +13,7 @@ import profile from '@/pages/profile.vue';
 
 const routes = [
   { path: '/', component: index },
-  { path: '/about', component: profile },
+  { path: '/profile', component: profile },
 ];
 
 const router = createRouter({
