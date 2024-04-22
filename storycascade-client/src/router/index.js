@@ -8,22 +8,18 @@
 import { createRouter, createWebHistory } from 'vue-router/auto';
 import { setupLayouts } from 'virtual:generated-layouts';
 
-import { defineAsyncComponent } from 'vue';
+import index from '@/pages/index.vue';
+import profile from '@/pages/profile.vue';
 
-const pages = import.meta.glob('./src/pages/*.vue');
-
-const routes = Object.keys(pages).map((path) => {
-  const name = path.match(/\.\/src\/pages\/(.+)\.vue$/)?.[1];
-  const component = defineAsyncComponent(() => import(`./pages/${name}.vue`));
-  return { path: `/${name.toLowerCase()}`, component };
-});
+const routes = [
+  { path: '/', component: index },
+  { path: '/about', component: profile },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   extendRoutes: setupLayouts,
-  routes: {
-    ...routes,
-  },
+  routes,
 });
 
 export default router;
