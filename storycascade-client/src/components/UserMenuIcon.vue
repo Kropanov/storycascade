@@ -21,7 +21,7 @@ const login = defineProps(['isLoggedIn']);
 const emit = defineEmits(['logout']);
 
 const items = ref([
-  { title: 'Profile', fn: () => navigate('profile') },
+  { title: 'Profile', fn: () => navigate('/profile') },
   { title: 'Exit', fn: () => emit('logout') },
 ]);
 
