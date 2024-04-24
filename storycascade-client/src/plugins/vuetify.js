@@ -19,7 +19,7 @@ const custom = {
     'surface-light': '#48A9A6',
     'surface-variant': '#424242',
     'on-surface-variant': '#d95b5b',
-    primary: '#1867C0',
+    primary: '#FFFFFF',
     'primary-darken-1': '#1F5592',
     secondary: '#48A9A6',
     'secondary-darken-1': '#018786',
