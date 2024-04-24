@@ -1,0 +1,27 @@
+<template>
+  <div>
+    <v-progress-circular
+      class="progress-circular"
+      :size="50"
+      color="primary"
+      v-if="loading"
+      indeterminate
+    ></v-progress-circular>
+    <div v-else>Hi</div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const loading = ref(true);
+</script>
+
+<style scoped>
+.progress-circular {
+  position: absolute;
+  top: 50%; /* Смещение от верхнего края на 50% высоты родительского элемента */
+  left: 50%; /* Смещение от левого края на 50% ширины родительского элемента */
+  transform: translate(-50%, -50%);
+}
+</style>
