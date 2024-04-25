@@ -15,13 +15,17 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAppStore } from '@/stores/app';
+
+const { user } = useAppStore();
+const username = user.value.username;
 
 const router = useRouter();
 const login = defineProps(['isLoggedIn']);
 const emit = defineEmits(['logout']);
 
 const items = ref([
-  { title: 'Profile', fn: () => navigate('/profile') },
+  { title: 'Profile', fn: () => navigate(`/${username}`) },
   { title: 'Exit', fn: () => emit('logout') },
 ]);
 

@@ -7,7 +7,7 @@
       <v-btn @click="signUpDialog = true">Sign Up</v-btn>
     </template>
 
-    <UserMenuIcon @logout="logout" :isLoggedIn="isLoggedIn" />
+    <UserMenuIcon v-else @logout="logout" :isLoggedIn="isLoggedIn" />
 
     <v-dialog v-model="loginDialog" width="auto">
       <Login @closeDialog="loginDialog = false" @login="isLoggedIn = true" />

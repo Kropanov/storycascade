@@ -9,16 +9,14 @@
         aspect-ratio="16/9"
         src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
       />
-      <v-card-title class="text-h5 text-md-h5 text-lg-h4">{{ user.value.username }}</v-card-title>
+      <v-card-title class="text-h5 text-md-h5 text-lg-h4">{{ props.user.username }}</v-card-title>
       <v-card-text> Description </v-card-text>
     </v-card>
   </div>
 </template>
 
 <script setup>
-import { useAppStore } from '@/stores/app';
-
-const { user } = useAppStore();
+const props = defineProps(['user']);
 </script>
 
 <style scoped></style>
