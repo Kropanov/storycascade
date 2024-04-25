@@ -14,9 +14,13 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useFetch } from '@/utils/fetch';
+import { useRoute } from 'vue-router';
 
 const loading = ref(true);
-const { data, error } = useFetch();
+
+const route = useRoute();
+const url = ref(`/users/${route.params.id}`);
+const { data, error } = useFetch(url);
 
 watch(
   () => data.value,
