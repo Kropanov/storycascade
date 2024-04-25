@@ -27,7 +27,7 @@ export class UsersService {
     return res.rows;
   }
 
-  async findOne(identifier: number | string, type: 'id' | 'email' | 'username'): Promise<CreateUserDto> {
+  async findOne(identifier: number | string, type: 'id' | 'email' | 'name'): Promise<CreateUserDto> {
     const queryMap = {
       id: 'SELECT * FROM users WHERE id = $1',
       email: 'SELECT * FROM users WHERE email = $1',

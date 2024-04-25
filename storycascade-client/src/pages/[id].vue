@@ -12,9 +12,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useFetch } from '@/utils/fetch';
 
 const loading = ref(true);
+const { data, error } = useFetch();
+
+watch(
+  () => data.value,
+  () => {
+    if (data && data.value) {
+      console.log(data.value);
+    }
+  },
+);
+
+watch(
+  () => error.value,
+  () => {
+    if (error && error.value) {
+      console.log(error.value);
+    }
+  },
+);
 </script>
 
 <style scoped>
