@@ -9,6 +9,7 @@ import '@mdi/font/css/materialdesignicons.css';
 import 'vuetify/styles';
 
 import { createVuetify } from 'vuetify';
+import { THEME } from '@/utils/constants';
 
 const custom = {
   dark: false,
@@ -88,7 +89,7 @@ const light = {
 
 export default createVuetify({
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: localStorage.getItem(THEME) ?? 'dark',
     themes: {
       custom,
       light,

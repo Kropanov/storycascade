@@ -19,8 +19,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useTheme } from 'vuetify';
+import { THEME } from '@/utils/constants';
 
 const theme = useTheme();
 
@@ -36,12 +37,30 @@ const items = [
   { title: 'Custom', icon: 'mdi-palette', theme: 'custom' },
 ];
 
+onBeforeMount(() => {
+  const currentTheme = localStorage.getItem(THEME);
+  if (!currentTheme) {
+    return;
+  }
+
+  items.map((item) => {
+    if (item.theme === currentTheme) {
+      selectedTheme.value = {
+        title: item.title,
+        icon: item.icon,
+      };
+    }
+  });
+});
+
 const themeSwitch = (item) => {
   selectedTheme.value = {
     title: item.title,
     icon: item.icon,
   };
+
   theme.global.name.value = item.theme;
+  localStorage.setItem(THEME, item.theme);
 };
 </script>
 
