@@ -47,11 +47,51 @@ const custom = {
     'theme-on-code': '#000000',
   },
 };
+
+const light = {
+  dark: false,
+  colors: {
+    background: '#FFFFFF',
+    surface: '#E0E0E0',
+    'surface-bright': '#FFFFFF',
+    'surface-light': '#C3FDFF',
+    'surface-variant': '#9E9E9E',
+    'on-surface-variant': '#01579B',
+    primary: '#01579B',
+    'primary-darken-1': '#002F6C',
+    secondary: '#4FC3F7',
+    'secondary-darken-1': '#029EDC',
+    error: '#FF6F00',
+    info: '#03A9F4',
+    success: '#4CAF50',
+    warning: '#FFC107',
+  },
+  variables: {
+    'border-color': '#01579B',
+    'border-opacity': 0.12,
+    'high-emphasis-opacity': 0.87,
+    'medium-emphasis-opacity': 0.6,
+    'disabled-opacity': 0.38,
+    'idle-opacity': 0.04,
+    'hover-opacity': 0.04,
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.08,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.12,
+    'dragged-opacity': 0.08,
+    'theme-kbd': '#212529',
+    'theme-on-kbd': '#FFFFFF',
+    'theme-code': '#F5F5F5',
+    'theme-on-code': '#000000',
+  },
+};
+
 export default createVuetify({
   theme: {
     defaultTheme: 'dark',
     themes: {
       custom,
+      light,
     },
   },
 });
