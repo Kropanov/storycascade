@@ -29,36 +29,50 @@ const selectedTheme = ref({
   title: 'dark',
   icon: 'mdi-weather-night',
 });
-
+// FIXME: refactor this code and fix bug with system theme
 const items = [
   { title: 'Dark', icon: 'mdi-weather-night', theme: 'dark' },
   { title: 'Light', icon: 'mdi-white-balance-sunny', theme: 'light' },
-  { title: 'System', icon: 'mdi-desktop-tower-monitor', theme: 'dark' },
   { title: 'Custom', icon: 'mdi-palette', theme: 'custom' },
 ];
 
 onBeforeMount(() => {
+  const systemTheme = appendSystemTheme();
   const currentTheme = localStorage.getItem(THEME);
+
   if (!currentTheme) {
+    setSelectedTheme(systemTheme);
     return;
   }
 
-  items.map((item) => {
-    if (item.theme === currentTheme) {
-      selectedTheme.value = {
-        title: item.title,
-        icon: item.icon,
-      };
-    }
-  });
+  setCurrentTheme(currentTheme);
 });
 
-const themeSwitch = (item) => {
+const appendSystemTheme = () => {
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const theme = prefersDarkScheme.matches ? 'dark' : 'light';
+  const systemTheme = { title: 'System', icon: 'mdi-desktop-tower-monitor', theme };
+  items.push(systemTheme);
+  return systemTheme;
+};
+
+const setCurrentTheme = (theme) => {
+  items.map((item) => {
+    if (item.theme === theme && item.title !== 'System') {
+      setSelectedTheme(item);
+    }
+  });
+};
+
+const setSelectedTheme = (item) => {
   selectedTheme.value = {
     title: item.title,
     icon: item.icon,
   };
+};
 
+const themeSwitch = (item) => {
+  setSelectedTheme(item);
   theme.global.name.value = item.theme;
   localStorage.setItem(THEME, item.theme);
 };
