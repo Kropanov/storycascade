@@ -1,7 +1,7 @@
 <template>
   <v-menu open-on-hover transition="scale-transition">
     <template v-slot:activator="{ props }">
-      <v-btn icon="mdi-account" v-bind="props" v-if="login.isLoggedIn"></v-btn>
+      <v-btn icon="mdi-account" v-bind="props"></v-btn>
     </template>
 
     <v-list>
@@ -18,14 +18,13 @@ import { useRouter } from 'vue-router';
 import { useAppStore } from '@/stores/app';
 
 const { user } = useAppStore();
-const username = user.value.username;
 
 const router = useRouter();
-const login = defineProps(['isLoggedIn']);
 const emit = defineEmits(['logout']);
 
 const items = ref([
-  { title: 'Profile', fn: () => navigate(`/${username}`) },
+  // FIXME: have to get data when reload
+  { title: 'Profile', fn: () => navigate(`/${user.value.username ?? ''}`) },
   { title: 'Exit', fn: () => emit('logout') },
 ]);
 

@@ -7,7 +7,7 @@
       <v-btn @click="signUpDialog = true">Sign Up</v-btn>
     </template>
 
-    <UserMenuIcon v-else @logout="logout" :isLoggedIn="isLoggedIn" />
+    <UserMenuIcon v-else @logout="logout" />
 
     <v-dialog v-model="loginDialog" width="auto">
       <Login @closeDialog="loginDialog = false" @login="isLoggedIn = true" />
@@ -20,13 +20,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import Login from '@/components/Login.vue';
 import SignUp from '@/components/SignUp.vue';
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue';
 import UserMenuIcon from '@/components/UserMenuIcon.vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/stores/app';
+import { TOKEN } from '@/utils/constants';
 
 const router = useRouter();
 const store = useAppStore();
@@ -34,6 +35,11 @@ const store = useAppStore();
 const loginDialog = ref(false);
 const signUpDialog = ref(false);
 const isLoggedIn = ref(false);
+
+onBeforeMount(() => {
+  const token = localStorage.getItem(TOKEN);
+  isLoggedIn.value = !!token;
+});
 
 const logout = () => {
   clearSession();

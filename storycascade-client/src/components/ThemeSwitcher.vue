@@ -8,10 +8,10 @@
       <v-list-item
         :title="item.title"
         density="compact"
-        v-for="(item, index) in items"
+        v-for="(item, index) in themes"
         :key="index"
         :value="index"
-        @click="() => themeSwitch(item)"
+        @click="() => switchTheme(item)"
       >
       </v-list-item>
     </v-list>
@@ -21,7 +21,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import { useTheme } from 'vuetify';
-import { THEME } from '@/utils/constants';
+import { THEME, THEME_TITLE } from '@/utils/constants';
 
 const theme = useTheme();
 
@@ -30,37 +30,45 @@ const selectedTheme = ref({
   icon: 'mdi-weather-night',
 });
 
-const items = [
+const themes = [
   { title: 'Dark', icon: 'mdi-weather-night', theme: 'dark' },
   { title: 'Light', icon: 'mdi-white-balance-sunny', theme: 'light' },
-  { title: 'System', icon: 'mdi-desktop-tower-monitor', theme: 'dark' },
   { title: 'Custom', icon: 'mdi-palette', theme: 'custom' },
 ];
 
 onBeforeMount(() => {
-  const currentTheme = localStorage.getItem(THEME);
-  if (!currentTheme) {
-    return;
-  }
-
-  items.map((item) => {
-    if (item.theme === currentTheme) {
-      selectedTheme.value = {
-        title: item.title,
-        icon: item.icon,
-      };
-    }
-  });
+  appendSystemTheme();
+  defineSelectedTheme();
 });
 
-const themeSwitch = (item) => {
+const appendSystemTheme = () => {
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const theme = prefersDarkScheme.matches ? 'dark' : 'light';
+  themes.push({ title: 'System', icon: 'mdi-desktop-tower-monitor', theme });
+};
+
+const defineSelectedTheme = () => {
+  const theme = localStorage.getItem(THEME);
+  const title = localStorage.getItem(THEME_TITLE);
+  themes.map((item) => {
+    if (item.theme === theme && item.title === title) {
+      setSelectedTheme(item);
+    }
+  });
+};
+
+const setSelectedTheme = (item) => {
   selectedTheme.value = {
     title: item.title,
     icon: item.icon,
   };
+};
 
+const switchTheme = (item) => {
+  setSelectedTheme(item);
   theme.global.name.value = item.theme;
   localStorage.setItem(THEME, item.theme);
+  localStorage.setItem(THEME_TITLE, item.title);
 };
 </script>
 
