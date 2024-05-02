@@ -4,6 +4,7 @@ import { NovelsModule } from './novels/novels.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DatabaseModule } from './database/database.module';
     UsersModule,
     AuthModule,
     DatabaseModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],
