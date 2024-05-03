@@ -1,4 +1,6 @@
-CREATE TABLE comments (
+DROP TABLE IF EXISTS comments;
+
+CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
     user_id int NOT NULL REFERENCES users(id),
     novels_id int NOT NULL REFERENCES novels(id),
