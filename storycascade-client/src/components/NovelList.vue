@@ -8,7 +8,9 @@
       </v-row>
       <v-row v-else>
         <v-col v-for="card in cards" :key="card.title" cols="12" xxl="1" xl="2" lg="2" md="4" sm="6">
-          <NovelListItem :card="card" />
+          <RouterLink :to="{ path: `novels/${card.id + '-' + card.title}` }">
+            <NovelListItem :card="card" />
+          </RouterLink>
         </v-col>
       </v-row>
     </v-container>
@@ -36,4 +38,8 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
