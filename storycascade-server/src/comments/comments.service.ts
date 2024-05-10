@@ -20,8 +20,9 @@ export class CommentsService {
     return res.rows;
   }
 
-  findAll() {
-    return `This action returns all comments`;
+  async findAll() {
+    const res = await this.postgres.query('SELECT * FROM comments', []);
+    return res.rows;
   }
 
   async findOne(id: number) {
@@ -29,11 +30,16 @@ export class CommentsService {
     return res.rows[0];
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  async update(id: number, updateCommentDto: UpdateCommentDto) {
+    const { userId, novelsId, parentCommentId, content } = updateCommentDto;
+    return await this.postgres.query(
+      'UPDATE comments SET user_id = $1, novels_id = $2, parent_comment_id = $3, content = $4 WHERE id = $5',
+      [userId, novelsId, parentCommentId, content, id],
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(id: number) {
+    const res = await this.postgres.query('DELETE FROM comments WHERE id = $1', [id]);
+    return res.rows;
   }
 }
