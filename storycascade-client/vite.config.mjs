@@ -46,7 +46,11 @@ export default defineConfig({
       vueTemplate: true,
     }),
   ],
-  define: { 'process.env': {} },
+  define: {
+    'process.env': {
+      base: 'http://localhost:3000/api/v1',
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
