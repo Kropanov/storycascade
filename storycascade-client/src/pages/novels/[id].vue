@@ -5,19 +5,35 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-
-const id = ref('');
-const novel = ref('');
+import { useFetch } from '@/utils/fetch';
 
 const route = useRoute();
+const url = ref('/novels/');
 
-onBeforeMount(() => {
-  const splitRoute = route.params.id.split('-');
-  id.value = splitRoute[0];
-  novel.value = splitRoute[1];
-});
+const [id, novel] = route.params.id.split('-');
+url.value = url.value + id;
+
+const { data, error } = useFetch(url);
+
+watch(
+  () => data.value,
+  () => {
+    if (data && data.value) {
+      console.log(data.value);
+    }
+  },
+);
+
+watch(
+  () => error.value,
+  () => {
+    if (error && error.value) {
+      console.log(error.value);
+    }
+  },
+);
 </script>
 
 <style scoped></style>

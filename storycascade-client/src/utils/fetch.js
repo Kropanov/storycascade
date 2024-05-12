@@ -23,7 +23,7 @@ export function useFetch(url, options) {
     const urlValue = toValue(url);
 
     try {
-      const res = await fetch('api/v1' + urlValue, mergedOptions);
+      const res = await fetch(process.env.base + urlValue, mergedOptions);
       data.value = await res.json();
     } catch (e) {
       error.value = e;

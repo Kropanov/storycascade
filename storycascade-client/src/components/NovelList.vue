@@ -8,9 +8,7 @@
       </v-row>
       <v-row v-else>
         <v-col v-for="card in cards" :key="card.title" cols="12" xxl="1" xl="2" lg="2" md="4" sm="6">
-          <RouterLink :to="{ path: `novels/${card.id + '-' + card.title}` }">
-            <NovelListItem :card="card" />
-          </RouterLink>
+          <NovelListItem @click="() => onClickNovel(card)" :card="card" />
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +19,9 @@
 import { ref, watchEffect } from 'vue';
 import NovelListItem from '@/components/NovelListItem.vue';
 import { useFetch } from '@/utils/fetch';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const cards = ref([]);
 const loading = ref(false);
 const url = ref('/novels');
@@ -36,6 +36,11 @@ watchEffect(() => {
     loading.value = false;
   }
 });
+
+const onClickNovel = (item) => {
+  const name = item.title.toLowerCase().split(' ').join('-');
+  router.push(`/novels/${item.id + '-' + name}`);
+};
 </script>
 
 <style scoped>
