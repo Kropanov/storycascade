@@ -2,8 +2,10 @@ DROP TABLE IF EXISTS novels;
 
 CREATE TABLE IF NOT EXISTS novels (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
+    name VARCHAR(150) NOT NULL UNIQUE,
     description VARCHAR(2000) NOT NULL,
+    chapters INT NOT NULL,
+    status_id int NOT NULL REFERENCES novel_status(id)
     country_id int NOT NULL REFERENCES countries(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
