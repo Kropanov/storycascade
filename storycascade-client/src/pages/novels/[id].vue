@@ -1,7 +1,27 @@
 <template>
-  <h1>{{ $route.params.id }}</h1>
-  <h1>id: {{ id }}</h1>
-  <h1>name: {{ novel }}</h1>
+  <v-container>
+    <v-img :aspect-ratio="1" class="bg-white" :src="imageSrc" width="300" height="350" max-height="500" cover>
+      <template v-slot:placeholder>
+        <v-card class="d-flex align-center justify-center fill-height">
+          <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+        </v-card>
+      </template>
+    </v-img>
+
+    <v-file-input
+      label="File input"
+      class="w-33 mt-3"
+      show-size
+      counter
+      variant="outlined"
+      accept="image/*"
+      @change="onFileChange"
+    ></v-file-input>
+
+    <h1>{{ $route.params.id }}</h1>
+    <h1>id: {{ id }}</h1>
+    <h1>name: {{ novel }}</h1>
+  </v-container>
 </template>
 
 <script setup>
@@ -11,6 +31,7 @@ import { useFetch } from '@/utils/fetch';
 
 const route = useRoute();
 const url = ref('/novels/');
+const imageSrc = ref('');
 
 const [id, novel] = route.params.id.split('-');
 url.value = url.value + id;
@@ -34,6 +55,20 @@ watch(
     }
   },
 );
+
+const onFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    console.log(file);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log(e.target.result);
+      imageSrc.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  console.log(imageSrc);
+};
 </script>
 
 <style scoped></style>
