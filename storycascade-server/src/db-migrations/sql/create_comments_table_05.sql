@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
     content VARCHAR(1200) NOT NULL,
     user_id int NOT NULL REFERENCES users(id),
-    novels_id int NOT NULL REFERENCES novels(id),
+    chapter_id int NOT NULL REFERENCES chapters(id),
     parent_comment_id int REFERENCES comments(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
