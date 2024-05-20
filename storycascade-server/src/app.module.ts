@@ -3,8 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { NovelsModule } from './novels/novels.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './common/database/database.module';
 import { CommentsModule } from './comments/comments.module';
+import { S3Module } from './common/s3/s3.module';
 
 @Module({
   imports: [
@@ -14,8 +15,9 @@ import { CommentsModule } from './comments/comments.module';
     NovelsModule,
     UsersModule,
     AuthModule,
-    DatabaseModule,
     CommentsModule,
+    DatabaseModule,
+    S3Module,
   ],
   controllers: [],
   providers: [],
