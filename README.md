@@ -25,6 +25,7 @@ The NestJS Server is a back-end application developed with Nest.js, a progressiv
 - Nest.js
 - PostgreSQL
 - JWT
+- AWS SDK
 - bcrypt
 - TypeScript
 
