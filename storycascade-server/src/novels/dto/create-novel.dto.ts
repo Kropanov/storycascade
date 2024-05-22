@@ -1,8 +1,8 @@
 export class CreateNovelDto {
-  id: number;
-  title: string | null;
-  image: string | null;
-  description: string | null;
-  rating: number | null;
-  genre: string | null;
+  title: string;
+  other_titles: string | null;
+  description: string;
+  chapters: number;
+  state_id: number;
+  country_id: number;
 }

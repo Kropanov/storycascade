@@ -1,12 +1,12 @@
 <template>
   <v-card class="mx-auto">
-    <v-container v-if="!novels" fluid>
+    <v-container fluid>
       <v-row v-if="loading">
         <v-col v-for="n in 6" :key="n" cols="12" xxl="1" xl="2" lg="2" md="4" sm="6">
-          <v-skeleton-loader height="250" type="novel"></v-skeleton-loader>
+          <v-skeleton-loader height="250"></v-skeleton-loader>
         </v-col>
       </v-row>
-      <v-row v-else>
+      <v-row>
         <v-col v-for="novel in novels" :key="novel.title" cols="12" xxl="1" xl="2" lg="2" md="4" sm="6">
           <NovelListItem @click="() => onClickNovel(novel)" :novel="novel" />
         </v-col>
@@ -23,10 +23,8 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const novels = ref([]);
-const loading = ref(false);
+const loading = ref(true);
 const url = ref('/novels');
-
-loading.value = true;
 
 const { data } = useFetch(url);
 
