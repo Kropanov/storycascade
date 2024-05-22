@@ -12,10 +12,10 @@ export class NovelsService {
   }
 
   async create(createNovelDto: CreateNovelDto) {
-    const { id, title, image, description, rating, genre } = createNovelDto;
+    const { title, other_titles, description, chapters, state_id, country_id } = createNovelDto;
     const res = await this.postgres.query(
-      'INSERT INTO novels (id, title, image, description, rating, genre) VALUES ($1, $2, $3, $4, $5, $6)',
-      [id, title, image, description, rating, genre],
+      'INSERT INTO novels (title, other_titles, description, chapters, state_id, country_id) VALUES ($1, $2, $3, $4, $5, $6)',
+      [title, other_titles, description, chapters, state_id, country_id],
     );
     return res.rows;
   }
@@ -31,10 +31,10 @@ export class NovelsService {
   }
 
   async update(_id: number, updateNovelDto: UpdateNovelDto) {
-    const { id, title, image, description, rating, genre } = updateNovelDto;
+    const { title, other_titles, description, chapters, state_id, country_id } = updateNovelDto;
     return await this.postgres.query(
-      'UPDATE novels SET id = $1, title = $2, image = $3, description = $4, rating = $5, genre = $6 WHERE id = $7',
-      [id, title, image, description, rating, genre, _id],
+      'UPDATE novels SET title = $1, other_titles = $2, description = $3, chapters = $4, state_id = $5, country_id = $6 WHERE id = $7',
+      [title, other_titles, description, chapters, state_id, country_id, _id],
     );
   }
 
