@@ -2,6 +2,7 @@
   <div class="input-area">
     <v-text-field
       class="mb-2"
+      v-model="inputValue"
       append-inner-icon="mdi-send"
       prepend-inner-icon="mdi-paperclip"
       density="comfortable"
@@ -20,9 +21,11 @@
 import { ref } from 'vue';
 
 const fileInput = ref(null);
+const inputValue = ref(null);
+const props = defineProps(['sendMessage']);
 
 const onClickSendMessage = () => {
-  console.log('Sent Message!');
+  props.sendMessage(inputValue.value);
 };
 
 const onClickUploadFile = () => {
