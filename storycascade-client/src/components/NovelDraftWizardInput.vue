@@ -26,6 +26,7 @@ const props = defineProps(['sendMessage']);
 
 const onClickSendMessage = () => {
   props.sendMessage(inputValue.value);
+  inputValue.value = null;
 };
 
 const onClickUploadFile = () => {
