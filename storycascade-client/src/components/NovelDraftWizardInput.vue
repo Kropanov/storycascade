@@ -1,7 +1,7 @@
 <template>
   <div class="input-area">
     <v-text-field
-      class="mb-2"
+      rounded="lg"
       v-model="inputValue"
       append-inner-icon="mdi-send"
       prepend-inner-icon="mdi-paperclip"
@@ -18,11 +18,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount, onBeforeUnmount } from 'vue';
+import { useAppStore } from '@/stores/app';
 
 const fileInput = ref(null);
 const inputValue = ref(null);
+
 const props = defineProps(['sendMessage']);
+const store = useAppStore();
 
 const onClickSendMessage = () => {
   props.sendMessage(inputValue.value);
@@ -39,6 +42,14 @@ const onFileSelected = (event) => {
     console.log(`Selected file: ${file.name}`);
   }
 };
+
+onBeforeMount(() => {
+  store.hideFooter();
+});
+
+onBeforeUnmount(() => {
+  store.showFooter();
+});
 </script>
 
 <style scoped>

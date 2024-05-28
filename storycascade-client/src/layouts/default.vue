@@ -7,7 +7,7 @@
     </v-main>
 
     <Alert />
-    <AppFooter />
+    <AppFooter v-if="store.isFooterVisible" />
   </v-app>
 </template>
 
@@ -15,4 +15,7 @@
 import AppFooter from '@/components/AppFooter.vue';
 import AppBar from '@/components/AppBar.vue';
 import Alert from '@/components/Alert.vue';
+import { useAppStore } from '@/stores/app';
+
+const store = useAppStore();
 </script>

@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 export const useAppStore = defineStore('app', {
   state: () => ({
     user: {},
+    isFooterVisible: true,
   }),
   actions: {
     setUserData(value) {
@@ -11,6 +12,12 @@ export const useAppStore = defineStore('app', {
     },
     clearUserData() {
       this.user = {};
+    },
+    hideFooter() {
+      this.isFooterVisible = false;
+    },
+    showFooter() {
+      this.isFooterVisible = true;
     },
   },
 });
