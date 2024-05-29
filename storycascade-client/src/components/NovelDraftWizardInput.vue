@@ -28,8 +28,13 @@ const props = defineProps(['sendMessage']);
 const store = useAppStore();
 
 const onClickSendMessage = () => {
+  if (inputValidation()) return;
   props.sendMessage(inputValue.value);
   inputValue.value = null;
+};
+
+const inputValidation = () => {
+  return inputValue.value === null || inputValue.value === '';
 };
 
 const onClickUploadFile = () => {
