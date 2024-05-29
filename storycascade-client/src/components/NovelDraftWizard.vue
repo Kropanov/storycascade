@@ -11,15 +11,15 @@ import NovelDraftWizardChat from '@/components/NovelDraftWizardChat.vue';
 import { ref } from 'vue';
 
 const messages = ref([
-  { id: 1, text: 'hi!' },
-  { id: 2, text: 'how are you?' },
-  { id: 3, text: 'Yep?' },
+  { id: 1, user: false, text: 'hi!' },
+  { id: 2, user: false, text: 'how are you?' },
+  { id: 3, user: false, text: 'Yep?' },
 ]);
 
 const sendMessage = (value) => {
   const date = new Date().toISOString();
   const id = Date.parse(date);
-  messages.value.push({ id, text: value });
+  messages.value.push({ id, user: true, text: value });
 };
 </script>
 

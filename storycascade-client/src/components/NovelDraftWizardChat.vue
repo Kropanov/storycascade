@@ -1,13 +1,13 @@
 <template>
   <div ref="chatArea" class="chat-area">
     <v-card
-      prepend-icon="mdi-wizard-hat"
-      v-for="message in props.messages"
-      :key="message.id"
       class="card ma-2"
       color="background"
-      subtitle="Ancient Wizard"
+      v-for="message in props.messages"
+      :key="message.id"
       :text="message.text"
+      :subtitle="message.user ? 'You' : `Ancient Wizard`"
+      :prepend-icon="message.user ? 'mdi-face-man' : 'mdi-wizard-hat'"
     >
     </v-card>
   </div>
