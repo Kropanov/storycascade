@@ -55,20 +55,6 @@ watch(
     }
   },
 );
-
-const onFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    console.log(file);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log(e.target.result);
-      imageSrc.value = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-  console.log(imageSrc);
-};
 </script>
 
 <style scoped></style>
