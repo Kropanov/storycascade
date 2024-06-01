@@ -10,6 +10,7 @@
       variant="solo"
       hide-details
       single-line
+      @keydown="(e) => handleKeyPressed(e)"
       @click:append-inner="onClickSendMessage"
       @click:prepend-inner="onClickUploadFile"
     ></v-text-field>
@@ -27,9 +28,34 @@ const inputValue = ref(null);
 const props = defineProps(['sendMessage']);
 const store = useAppStore();
 
-const onClickSendMessage = () => {
+const keys = ['Enter'];
+
+onBeforeMount(() => {
+  store.hideFooter();
+});
+
+onBeforeUnmount(() => {
+  store.showFooter();
+});
+
+const handleKeyPressed = (e) => {
+  if (keys.includes(e.key)) {
+    sendMessage();
+  }
+};
+
+const sendMessage = () => {
+  if (inputValidation()) return;
   props.sendMessage(inputValue.value);
   inputValue.value = null;
+};
+
+const onClickSendMessage = () => {
+  sendMessage();
+};
+
+const inputValidation = () => {
+  return inputValue.value === null || inputValue.value === '';
 };
 
 const onClickUploadFile = () => {
@@ -42,14 +68,6 @@ const onFileSelected = (event) => {
     console.log(`Selected file: ${file.name}`);
   }
 };
-
-onBeforeMount(() => {
-  store.hideFooter();
-});
-
-onBeforeUnmount(() => {
-  store.showFooter();
-});
 </script>
 
 <style scoped>

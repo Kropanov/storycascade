@@ -1,5 +1,5 @@
 <template>
-  <v-menu open-on-hover>
+  <v-menu>
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" :prepend-icon="selectedTheme.icon">{{ selectedTheme.title }}</v-btn>
     </template>

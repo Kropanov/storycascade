@@ -2186,7 +2186,7 @@ vite-plugin-vue-layouts@^0.11.0:
     debug "^4.3.4"
     fast-glob "^3.3.2"
 
-vite-plugin-vuetify@^2.0.3, vite-plugin-vuetify@>=1.0.0-alpha.12:
+vite-plugin-vuetify@^2.0.3, vite-plugin-vuetify@>=1.0.0:
   version "2.0.3"
   resolved "https://registry.npmjs.org/vite-plugin-vuetify/-/vite-plugin-vuetify-2.0.3.tgz"
   integrity sha512-HbYajgGgb/noaVKNRhnnXIiQZrNXfNIeanUGAwXgOxL6h/KULS40Uf51Kyz8hNmdegF+DwjgXXI/8J1PNS83xw==
@@ -2242,10 +2242,10 @@ vue-router@^4.0.11, vue-router@^4.3.0:
     "@vue/server-renderer" "3.4.21"
     "@vue/shared" "3.4.21"
 
-vuetify@^3.0.0:
-  version "3.5.9"
-  resolved "https://registry.npmjs.org/vuetify/-/vuetify-3.5.9.tgz"
-  integrity sha512-tA3N2uWZFNSZRFNnXN841x4rWozYXKC0fGW/mJIwcKkQiI0+gmVCETtjF8bnOS7L1s0buWzw94uYTlXQa5AQ4w==
+vuetify@^3.0.0, vuetify@^3.6.8:
+  version "3.6.8"
+  resolved "https://registry.npmjs.org/vuetify/-/vuetify-3.6.8.tgz"
+  integrity sha512-j0v0iTeSVRj2ZEM9Q8HxejHxmxrQLYQSalhH82hfcraORaiDoqf1XV05N3P5ERXkKiJjJc/LfxFAUUvYSldxeg==
 
 webpack-sources@^3.2.3:
   version "3.2.3"
