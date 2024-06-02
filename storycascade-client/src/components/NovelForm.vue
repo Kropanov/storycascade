@@ -1,19 +1,41 @@
 <template>
   <v-form>
-    <v-stepper v-model="step" :items="items1" alt-labels>
-      <template v-slot:[`item.1`]> </template>
+    <v-stepper v-model="step" :items="items" alt-labels>
+      <template v-slot:[`item.1`]>
+        <NovelFormNaming />
+      </template>
 
-      <template v-slot:[`item.2`]> </template>
+      <template v-slot:[`item.2`]>
+        <NovelFormDesc />
+      </template>
 
-      <template v-slot:[`item.3`]> </template>
+      <template v-slot:[`item.3`]>
+        <NovelFormGenres />
+      </template>
 
-      <template v-slot:[`item.4`]> </template>
+      <template v-slot:[`item.4`]>
+        <NovelFormCover />
+      </template>
+
+      <template v-slot:actions>
+        <div class="d-flex justify-space-between mb-3">
+          <v-btn class="ml-4" @click="step -= 1" :disabled="step === 1" variant="text"> Previous </v-btn>
+          <div class="mr-5">
+            <v-btn class="mr-3" @click="step += 1" :disabled="step === items.length" variant="tonal"> Next </v-btn>
+            <v-btn @click="submit" :disabled="step !== items.length" variant="outlined"> Submit </v-btn>
+          </div>
+        </div>
+      </template>
     </v-stepper>
   </v-form>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import NovelFormNaming from '@/components/NovelFormNaming.vue';
+import NovelFormDesc from '@/components/NovelFormDesc.vue';
+import NovelFormGenres from '@/components/NovelFormGenres.vue';
+import NovelFormCover from '@/components/NovelFormCover.vue';
 
 // const draft = ref({
 //   title: '',
@@ -27,8 +49,12 @@ import { ref } from 'vue';
 //
 // console.log(draft);
 
-const items1 = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
 const step = ref(1);
+const items = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
+
+const submit = () => {
+  console.log('Submit!');
+};
 </script>
 
 <style scoped></style>
