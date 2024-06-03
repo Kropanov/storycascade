@@ -1,24 +1,45 @@
 <template>
-  <v-text-field class="mt-2" variant="outlined" label="Genres"></v-text-field>
+  <v-autocomplete
+    clearable
+    chips
+    class="mt-2"
+    variant="outlined"
+    v-model="values"
+    :items="titles"
+    label="Genres"
+    multiple
+  ></v-autocomplete>
 
-  <v-sheet class="mb-5">
-    <v-chip-group selected-class="text-primary" mandatory multiple column>
-      <v-chip v-for="title in titles" :key="title" :text="title"></v-chip>
-    </v-chip-group>
-  </v-sheet>
-
-  <v-text-field variant="outlined" label="Tags"></v-text-field>
-  <v-sheet class="mb-1">
-    <v-chip-group selected-class="text-primary" mandatory multiple column>
-      <v-chip v-for="title in titles" :key="title" :text="title"></v-chip>
-    </v-chip-group>
-  </v-sheet>
+  <v-autocomplete
+    clearable
+    chips
+    class="mt-2"
+    variant="outlined"
+    v-model="values"
+    :items="titles"
+    label="Tags"
+    multiple
+  ></v-autocomplete>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-const titles = ref(['Work']);
+const values = ref(null);
+const titles = ref([
+  'California',
+  'Colorado',
+  'Florida',
+  'Georgia',
+  'Texas',
+  'Wyoming1',
+  'California2',
+  'Colorado3',
+  'Florida4',
+  'Georgia5',
+  'Texas6',
+  'Wyoming7',
+]);
 </script>
 
 <style scoped></style>

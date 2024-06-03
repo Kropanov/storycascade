@@ -37,23 +37,22 @@ import NovelFormDesc from '@/components/NovelFormDesc.vue';
 import NovelFormGenres from '@/components/NovelFormGenres.vue';
 import NovelFormCover from '@/components/NovelFormCover.vue';
 
-// const draft = ref({
-//   title: '',
-//   other_titles: [],
-//   descriptions: '',
-//   country: '',
-//   genres: [],
-//   tags: [],
-//   image: '',
-// });
-//
-// console.log(draft);
+const draft = ref({
+  title: '',
+  other_titles: [],
+  descriptions: '',
+  country: '',
+  genres: [],
+  tags: [],
+  image: '',
+});
 
 const step = ref(1);
 const items = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
 
 const submit = () => {
   console.log('Submit!');
+  console.log(draft);
 };
 </script>
 
