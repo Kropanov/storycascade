@@ -1,6 +1,6 @@
 <template>
   <v-textarea clearable label="Novel description"></v-textarea>
-  <v-autocomplete v-model="values" :items="items" label="Country" prepend-icon="mdi-flag-outline"></v-autocomplete>
+  <v-autocomplete :items="items" label="Country" prepend-icon="mdi-flag-outline"></v-autocomplete>
 </template>
 
 <script setup>
