@@ -5,7 +5,6 @@
         <v-text-field
           clearable
           v-model="draft.title"
-          ref="inputRef"
           class="mt-2"
           variant="outlined"
           label="Enter the title of the novel"
@@ -28,15 +27,57 @@
       </template>
 
       <template v-slot:[`item.2`]>
-        <NovelFormDesc />
+        <v-textarea v-model="draft.description" clearable label="Novel description"></v-textarea>
+        <v-autocomplete
+          v-model="draft.country"
+          :items="countries"
+          label="Country"
+          prepend-icon="mdi-flag-outline"
+        ></v-autocomplete>
       </template>
 
       <template v-slot:[`item.3`]>
-        <NovelFormGenres />
+        <v-autocomplete
+          clearable
+          chips
+          class="mt-2"
+          variant="outlined"
+          v-model="draft.genres"
+          :items="genres"
+          label="Genres"
+          multiple
+        ></v-autocomplete>
+
+        <v-autocomplete
+          clearable
+          chips
+          class="mt-2"
+          variant="outlined"
+          v-model="draft.tags"
+          :items="tags"
+          label="Tags"
+          multiple
+        ></v-autocomplete>
       </template>
 
       <template v-slot:[`item.4`]>
-        <NovelFormCover />
+        <div class="d-flex flex-column align-center">
+          <v-img :aspect-ratio="1" :src="draft.image" width="300" height="350" max-height="500">
+            <template v-slot:placeholder>
+              <v-card border="thin" class="d-flex align-center justify-center fill-height" color="surface"> </v-card>
+            </template>
+          </v-img>
+
+          <v-file-input
+            label="Choose novel art cover"
+            class="w-33 mt-3"
+            show-size
+            counter
+            variant="outlined"
+            accept="image/*"
+            @change="onFileChange"
+          ></v-file-input>
+        </div>
       </template>
 
       <template v-slot:actions>
@@ -53,35 +94,43 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import NovelFormDesc from '@/components/NovelFormDesc.vue';
-import NovelFormGenres from '@/components/NovelFormGenres.vue';
-import NovelFormCover from '@/components/NovelFormCover.vue';
+import { ref } from 'vue';
 
 const draft = ref({
   title: '',
   other_titles: [],
-  descriptions: '',
+  description: '',
   country: '',
   genres: [],
   tags: [],
   image: '',
 });
 
-const inputRef = ref(null);
 const inputValue = ref('');
 
 const step = ref(1);
 const steps = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
 
-onMounted(() => {
-  inputRef.value.focus();
-});
+const countries = ref([]);
+const tags = ref([]);
+const genres = ref([]);
 
 const onKeyDown = (e) => {
   if (e.key === 'Enter' && inputValue.value !== '') {
     draft.value.other_titles.push(inputValue.value);
     inputValue.value = '';
+  }
+};
+
+const onFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log(e.target.result);
+      draft.value.image = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 };
 
