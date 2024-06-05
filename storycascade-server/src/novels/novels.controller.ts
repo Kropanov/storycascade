@@ -5,31 +5,30 @@ import { UpdateNovelDto } from './dto/update-novel.dto';
 
 @Controller('novels')
 export class NovelsController {
-  // TODO: append async to methods
   constructor(private readonly novelsService: NovelsService) {}
 
   @Post()
-  create(@Body() createNovelDto: CreateNovelDto) {
+  async create(@Body() createNovelDto: CreateNovelDto) {
     return this.novelsService.create(createNovelDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.novelsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.novelsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNovelDto: UpdateNovelDto) {
+  async update(@Param('id') id: string, @Body() updateNovelDto: UpdateNovelDto) {
     return this.novelsService.update(+id, updateNovelDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.novelsService.remove(+id);
   }
 }
