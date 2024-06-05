@@ -94,7 +94,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useFetch } from '@/utils/fetch';
 
 const draft = ref({
   title: '',
@@ -138,6 +139,24 @@ const submit = () => {
   console.log('Submit!');
   console.log(draft.value);
 };
+
+onBeforeMount(() => {
+  const { data, error } = useFetch('/countries');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      countries.value = data.value.map((obj) => obj.name);
+    },
+  );
+});
 </script>
 
 <style scoped></style>

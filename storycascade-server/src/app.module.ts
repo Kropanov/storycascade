@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './common/database/database.module';
 import { CommentsModule } from './comments/comments.module';
 import { S3Module } from './common/s3/s3.module';
+import { CountriesModule } from './countries/countries.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { S3Module } from './common/s3/s3.module';
     CommentsModule,
     DatabaseModule,
     S3Module,
+    CountriesModule,
   ],
   controllers: [],
   providers: [],
