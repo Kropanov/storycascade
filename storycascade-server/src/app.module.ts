@@ -7,6 +7,8 @@ import { DatabaseModule } from './common/database/database.module';
 import { CommentsModule } from './comments/comments.module';
 import { S3Module } from './common/s3/s3.module';
 import { CountriesModule } from './countries/countries.module';
+import { GenresModule } from './genres/genres.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { CountriesModule } from './countries/countries.module';
     DatabaseModule,
     S3Module,
     CountriesModule,
+    GenresModule,
+    TagsModule,
   ],
   controllers: [],
   providers: [],

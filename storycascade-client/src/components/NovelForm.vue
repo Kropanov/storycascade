@@ -157,6 +157,42 @@ onBeforeMount(() => {
     },
   );
 });
+
+onBeforeMount(() => {
+  const { data, error } = useFetch('/genres');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      genres.value = data.value.map((obj) => obj.name);
+    },
+  );
+});
+
+onBeforeMount(() => {
+  const { data, error } = useFetch('/tags');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      tags.value = data.value.map((obj) => obj.name);
+    },
+  );
+});
 </script>
 
 <style scoped></style>
