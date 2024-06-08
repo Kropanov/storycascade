@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import NovelForm from '@/components/NovelForm.vue';
+import NovelForm from '@/components/NovelStepperForm.vue';
 </script>
 
 <style scoped></style>
