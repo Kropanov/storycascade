@@ -12,7 +12,8 @@ export class TagsService {
   }
 
   async create(createTagDto: CreateTagDto) {
-    return `This action returns a # tag`;
+    const { name } = createTagDto;
+    return this.postgres.query('INSERT INTO tags (name) VALUES ($1)', [name]);
   }
 
   async findAll() {
@@ -20,15 +21,17 @@ export class TagsService {
     return res.rows;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tag`;
+  async findOne(id: number) {
+    const res = await this.postgres.query('SELECT name FROM tags WHERE id = $1', [id]);
+    return res.rows[0];
   }
 
-  update(id: number, updateTagDto: UpdateTagDto) {
-    return `This action updates a #${id} tag`;
+  async update(id: number, updateTagDto: UpdateTagDto) {
+    const { name } = updateTagDto;
+    return await this.postgres.query('UPDATE tags SET name = $1 WHERE id = $2', [name, id]);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tag`;
+  async remove(id: number) {
+    return await this.postgres.query('DELETE FROM tags WHERE id = $1', [id]);
   }
 }
