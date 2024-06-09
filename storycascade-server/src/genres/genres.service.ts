@@ -11,8 +11,10 @@ export class GenresService {
     this.postgres = new PostgresService();
   }
 
-  create(createGenreDto: CreateGenreDto) {
-    return 'This action adds a new genre';
+  async create(createGenreDto: CreateGenreDto) {
+    const { name } = createGenreDto;
+    const res = await this.postgres.query('INSERT INTO genres (name) VALUES ($1)', [name]);
+    return res.rows;
   }
 
   async findAll() {
@@ -20,15 +22,18 @@ export class GenresService {
     return res.rows;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} genre`;
+  async findOne(id: number) {
+    const res = await this.postgres.query('SELECT name FROM genres WHERE id = $1', [id]);
+    return res.rows;
   }
 
-  update(id: number, updateGenreDto: UpdateGenreDto) {
-    return `This action updates a #${id} genre`;
+  async update(id: number, updateGenreDto: UpdateGenreDto) {
+    const { name } = updateGenreDto;
+    const res = await this.postgres.query('UPDATE genres SET name = $1 WHERE id = $2', [name, id]);
+    return res.rows;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} genre`;
+  async remove(id: number) {
+    return await this.postgres.query('DELETE FROM genres WHERE id = $1', [id]);
   }
 }
