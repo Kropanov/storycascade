@@ -11,8 +11,10 @@ export class CountriesService {
     this.postgres = new PostgresService();
   }
 
-  create(createCountryDto: CreateCountryDto) {
-    return 'This action adds a new country';
+  async create(createCountryDto: CreateCountryDto) {
+    const { name, code } = createCountryDto;
+    const res = await this.postgres.query('INSERT INTO countries (code, name) VALUES ($1, $2)', [code, name]);
+    return res.rows[0];
   }
 
   async findAll() {
@@ -20,15 +22,19 @@ export class CountriesService {
     return res.rows;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} country`;
+  async findOne(id: number) {
+    const res = await this.postgres.query('SELECT name, code FROM countries WHERE id = $1', [id]);
+    return res.rows;
   }
 
-  update(id: number, updateCountryDto: UpdateCountryDto) {
-    return `This action updates a #${id} country`;
+  async update(id: number, updateCountryDto: UpdateCountryDto) {
+    const { name, code } = updateCountryDto;
+    const res = await this.postgres.query('UPDATE countries SET code = $1, name = $2 WHERE id = $3', [code, name, id]);
+    return res.rows;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} country`;
+  async remove(id: number) {
+    const res = await this.postgres.query('DELETE FROM countries WHERE id = $1', [id]);
+    return res.rows;
   }
 }
