@@ -116,6 +116,66 @@ const countries = ref([]);
 const tags = ref([]);
 const genres = ref([]);
 
+onBeforeMount(() => {
+  getCountries();
+  getGenres();
+  getTags();
+});
+
+const getCountries = () => {
+  const { data, error } = useFetch('/countries');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      countries.value = data.value.map((obj) => obj.name);
+    },
+  );
+};
+
+const getGenres = () => {
+  const { data, error } = useFetch('/genres');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      genres.value = data.value.map((obj) => obj.name);
+    },
+  );
+};
+
+const getTags = () => {
+  const { data, error } = useFetch('/tags');
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      tags.value = data.value.map((obj) => obj.name);
+    },
+  );
+};
+
 const onKeyDown = (e) => {
   if (e.key === 'Enter' && inputValue.value !== '') {
     draft.value.other_titles.push(inputValue.value);
@@ -139,60 +199,6 @@ const submit = () => {
   console.log('Submit!');
   console.log(draft.value);
 };
-
-onBeforeMount(() => {
-  const { data, error } = useFetch('/countries');
-
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      countries.value = data.value.map((obj) => obj.name);
-    },
-  );
-});
-
-onBeforeMount(() => {
-  const { data, error } = useFetch('/genres');
-
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      genres.value = data.value.map((obj) => obj.name);
-    },
-  );
-});
-
-onBeforeMount(() => {
-  const { data, error } = useFetch('/tags');
-
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      tags.value = data.value.map((obj) => obj.name);
-    },
-  );
-});
 </script>
 
 <style scoped></style>
