@@ -34,4 +34,17 @@ export class TagsService {
   async remove(id: number) {
     return await this.postgres.query('DELETE FROM tags WHERE id = $1', [id]);
   }
+
+  async getIdByName(name: string) {
+    const res = await this.postgres.query('SELECT id FROM tags WHERE name = $1', [name]);
+    return res.rows[0]?.id;
+  }
+
+  async linkTagToNovel(novel_id: number, tag_id: number) {
+    const res = await this.postgres.query('INSERT INTO novel_tags (novel_id, tag_id) VALUES ($1, $2)', [
+      novel_id,
+      tag_id,
+    ]);
+    return res.rows;
+  }
 }

@@ -36,4 +36,17 @@ export class GenresService {
   async remove(id: number) {
     return await this.postgres.query('DELETE FROM genres WHERE id = $1', [id]);
   }
+
+  async getIdByName(name: string) {
+    const res = await this.postgres.query('SELECT id FROM genres WHERE name = $1', [name]);
+    return res.rows[0]?.id;
+  }
+
+  async linkGenreToNovel(novel_id: number, genre_id: number) {
+    const res = await this.postgres.query('INSERT INTO novel_genre (novel_id, genre_id) VALUES ($1, $2)', [
+      novel_id,
+      genre_id,
+    ]);
+    return res.rows;
+  }
 }

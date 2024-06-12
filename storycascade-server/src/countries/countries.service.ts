@@ -38,6 +38,7 @@ export class CountriesService {
     return res.rows;
   }
 
+  // FIXME: refactor name of this method
   async findOneByName(name: string) {
     const res = await this.postgres.query('SELECT id FROM countries WHERE name = $1', [name]);
     return res.rows[0]?.id;

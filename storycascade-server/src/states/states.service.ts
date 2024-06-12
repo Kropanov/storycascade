@@ -44,4 +44,9 @@ export class StatesService {
     const res = await this.postgres.query('DELETE FROM states WHERE id = $1', [id]);
     return res.rows;
   }
+
+  async getIdByName(name: string) {
+    const res = await this.postgres.query('SELECT id FROM states WHERE name = $1', [name]);
+    return res.rows[0]?.id;
+  }
 }
