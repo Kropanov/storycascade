@@ -102,6 +102,7 @@ const draft = ref({
   other_titles: [],
   description: '',
   country: '',
+  state: 'Active',
   genres: [],
   tags: [],
   image: '',

@@ -9,6 +9,7 @@ import { S3Module } from './common/s3/s3.module';
 import { CountriesModule } from './countries/countries.module';
 import { GenresModule } from './genres/genres.module';
 import { TagsModule } from './tags/tags.module';
+import { StatesModule } from './states/states.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TagsModule } from './tags/tags.module';
     CountriesModule,
     GenresModule,
     TagsModule,
+    StatesModule,
   ],
   controllers: [],
   providers: [],

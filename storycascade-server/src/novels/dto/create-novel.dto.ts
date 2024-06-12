@@ -3,6 +3,9 @@ export class CreateNovelDto {
   other_titles: string | null;
   description: string;
   chapters: number;
-  state_id: number;
-  country_id: number;
+  country: string;
+  state: string;
+  genres: Array<string>;
+  tags: Array<string>;
+  image: string;
 }

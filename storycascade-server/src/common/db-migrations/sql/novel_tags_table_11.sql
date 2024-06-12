@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS novel_tags;
 
+-- TODO: refactor table name
 CREATE TABLE IF NOT EXISTS novel_tags (
     id SERIAL PRIMARY KEY,
     novel_id INT,
