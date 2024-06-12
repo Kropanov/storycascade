@@ -4,5 +4,5 @@ export class CreateNovelDto {
   description: string;
   chapters: number;
   state_id: number;
-  country_id: number;
+  country: string;
 }
