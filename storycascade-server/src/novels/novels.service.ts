@@ -6,10 +6,12 @@ import { CountriesService } from '../countries/countries.service';
 import { StatesService } from '../states/states.service';
 import { GenresService } from '../genres/genres.service';
 import { TagsService } from '../tags/tags.service';
+import { S3Service } from '../common/s3/s3.service';
 
 @Injectable()
 export class NovelsService {
   private postgres: PostgresService;
+  private s3Service: S3Service;
 
   constructor(
     private readonly countriesService: CountriesService,
@@ -18,6 +20,7 @@ export class NovelsService {
     private readonly tagsService: TagsService,
   ) {
     this.postgres = new PostgresService();
+    this.s3Service = new S3Service();
   }
 
   async create(createNovelDto: CreateNovelDto) {
@@ -28,7 +31,7 @@ export class NovelsService {
 
     const res = await this.postgres.query(
       'INSERT INTO novels (title, other_titles, description, chapters, state_id, country_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;',
-      [title, other_titles, description, chapters, state_id, country_id],
+      [title, other_titles[0], description, chapters, state_id, country_id],
     );
 
     if (res.rows.length > 0) {
@@ -44,8 +47,7 @@ export class NovelsService {
         await this.tagsService.linkTagToNovel(novel_id, tag_id);
       });
 
-      // TODO: call s3 api here to create image file
-      console.log(image);
+      await this.s3Service.uploadFile('novels/posters/res.png', image);
     }
 
     return res.rows;

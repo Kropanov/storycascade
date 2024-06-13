@@ -103,6 +103,7 @@ const draft = ref({
   description: '',
   country: '',
   state: 'Active',
+  chapters: 0,
   genres: [],
   tags: [],
   image: '',
@@ -118,13 +119,13 @@ const tags = ref([]);
 const genres = ref([]);
 
 onBeforeMount(() => {
-  getCountries();
-  getGenres();
-  getTags();
+  fetch('/countries', getCountries);
+  fetch('/genres', getGenres);
+  fetch('/tags', getTags);
 });
 
-const getCountries = () => {
-  const { data, error } = useFetch('/countries');
+const fetch = (url, fn) => {
+  const { data, error } = useFetch(url);
 
   watch(
     () => error.value,
@@ -136,45 +137,23 @@ const getCountries = () => {
   watch(
     () => data.value,
     () => {
-      countries.value = data.value.map((obj) => obj.name);
+      if (data && data.value) {
+        fn(data);
+      }
     },
   );
 };
 
-const getGenres = () => {
-  const { data, error } = useFetch('/genres');
-
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      genres.value = data.value.map((obj) => obj.name);
-    },
-  );
+const getCountries = (data) => {
+  countries.value = data.value.map((obj) => obj.name);
 };
 
-const getTags = () => {
-  const { data, error } = useFetch('/tags');
+const getGenres = (data) => {
+  genres.value = data.value.map((obj) => obj.name);
+};
 
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      tags.value = data.value.map((obj) => obj.name);
-    },
-  );
+const getTags = (data) => {
+  tags.value = data.value.map((obj) => obj.name);
 };
 
 const onKeyDown = (e) => {
@@ -197,8 +176,26 @@ const onFileChange = (event) => {
 };
 
 const submit = () => {
-  console.log('Submit!');
-  console.log(draft.value);
+  const { data, error } = useFetch('/novels', {
+    method: 'POST',
+    body: JSON.stringify(draft.value),
+  });
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      if (data && data.value) {
+        console.log(data.value);
+      }
+    },
+  );
 };
 </script>
 
