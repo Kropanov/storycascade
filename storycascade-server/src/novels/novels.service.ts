@@ -59,8 +59,7 @@ export class NovelsService {
   }
 
   async findOne(id: number) {
-    const res = await this.postgres.query('SELECT * FROM novels WHERE id = $1', [id]);
-    return res.rows[0];
+    return await this.s3Service.getFile('novels/posters/res.png');
   }
 
   async update(_id: number, updateNovelDto: UpdateNovelDto) {
