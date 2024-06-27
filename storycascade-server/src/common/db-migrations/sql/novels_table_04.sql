@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS novels (
     other_titles VARCHAR(250),
     description VARCHAR(2000) NOT NULL,
     chapters INT NOT NULL,
+    poster_id VARCHAR(100) NOT NULL, -- FIXME: poster_id => image_key
     state_id int NOT NULL REFERENCES states(id),
     country_id int NOT NULL REFERENCES countries(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
+import { ReadStream } from 'fs';
 
 @Injectable()
 export class S3Service {
@@ -10,7 +11,7 @@ export class S3Service {
     this.s3Client = new S3Client({ region: process.env.REGION, endpoint: process.env.ENDPOINT });
   }
 
-  async uploadFile(key: string, body: string | Buffer): Promise<any> {
+  async uploadFile(key: string, body: string | Buffer | ReadStream): Promise<any> {
     const params = {
       Key: key,
       Body: body,

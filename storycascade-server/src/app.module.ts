@@ -10,22 +10,28 @@ import { CountriesModule } from './countries/countries.module';
 import { GenresModule } from './genres/genres.module';
 import { TagsModule } from './tags/tags.module';
 import { StatesModule } from './states/states.module';
+import { UploadModule } from './upload/upload.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { FileModule } from './common/fs/fs.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env.local',
     }),
+    MulterModule.register({ dest: './files' }),
     NovelsModule,
     UsersModule,
     AuthModule,
     CommentsModule,
     DatabaseModule,
     S3Module,
+    FileModule,
     CountriesModule,
     GenresModule,
     TagsModule,
     StatesModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],

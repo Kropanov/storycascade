@@ -96,20 +96,22 @@
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
 import { useFetch } from '@/utils/fetch';
+import { v7 as uuidv7 } from 'uuid';
 
 const draft = ref({
   title: '',
   other_titles: [],
+  file_name: '',
   description: '',
   country: '',
   state: 'Active',
   chapters: 0,
   genres: [],
   tags: [],
-  image: '',
 });
 
 const inputValue = ref('');
+const imageFile = ref(null);
 
 const step = ref(1);
 const steps = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
@@ -165,17 +167,44 @@ const onKeyDown = (e) => {
 
 const onFileChange = (event) => {
   const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log(e.target.result);
-      draft.value.image = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
+  draft.value.file_name = file.name;
+  imageFile.value = file;
 };
 
-const submit = () => {
+const uploadFile = () => {
+  const formData = new FormData();
+
+  const uuid = uuidv7();
+  const ext = draft.value.file_name.split('.')[1];
+  const newFileName = `${uuid}.${ext}`;
+  draft.value.file_name = newFileName;
+
+  formData.append('file', imageFile.value, newFileName);
+
+  const { data, error } = useFetch('/upload', {
+    headers: {},
+    method: 'POST',
+    body: formData,
+  });
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      if (data && data.value) {
+        console.log(data.value);
+      }
+    },
+  );
+};
+
+const postNovel = () => {
   const { data, error } = useFetch('/novels', {
     method: 'POST',
     body: JSON.stringify(draft.value),
@@ -196,6 +225,11 @@ const submit = () => {
       }
     },
   );
+};
+
+const submit = () => {
+  uploadFile();
+  postNovel();
 };
 </script>
 
