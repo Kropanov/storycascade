@@ -1,6 +1,12 @@
 <template>
   <v-card>
-    <v-img :src="asd" class="align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="250px" cover>
+    <v-img
+      :src="novel.image.res"
+      class="align-end"
+      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      height="250px"
+      cover
+    >
       <v-card-title class="text-white" v-text="props.novel.title"></v-card-title>
       <v-card-subtitle class="text-white mb-2" v-text="props.novel.chapters"></v-card-subtitle>
     </v-img>

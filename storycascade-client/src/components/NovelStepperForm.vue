@@ -96,19 +96,22 @@
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
 import { useFetch } from '@/utils/fetch';
+import { v7 as uuidv7 } from 'uuid';
 
 const draft = ref({
   title: '',
   other_titles: [],
+  file_name: '',
   description: '',
   country: '',
   state: 'Active',
+  chapters: 0,
   genres: [],
   tags: [],
-  image: '',
 });
 
 const inputValue = ref('');
+const imageFile = ref(null);
 
 const step = ref(1);
 const steps = ref(['Naming', 'Description and country', 'Genres and tags', 'Novel cover']);
@@ -118,13 +121,13 @@ const tags = ref([]);
 const genres = ref([]);
 
 onBeforeMount(() => {
-  getCountries();
-  getGenres();
-  getTags();
+  fetch('/countries', getCountries);
+  fetch('/genres', getGenres);
+  fetch('/tags', getTags);
 });
 
-const getCountries = () => {
-  const { data, error } = useFetch('/countries');
+const fetch = (url, fn) => {
+  const { data, error } = useFetch(url);
 
   watch(
     () => error.value,
@@ -136,45 +139,23 @@ const getCountries = () => {
   watch(
     () => data.value,
     () => {
-      countries.value = data.value.map((obj) => obj.name);
+      if (data && data.value) {
+        fn(data);
+      }
     },
   );
 };
 
-const getGenres = () => {
-  const { data, error } = useFetch('/genres');
-
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      genres.value = data.value.map((obj) => obj.name);
-    },
-  );
+const getCountries = (data) => {
+  countries.value = data.value.map((obj) => obj.name);
 };
 
-const getTags = () => {
-  const { data, error } = useFetch('/tags');
+const getGenres = (data) => {
+  genres.value = data.value.map((obj) => obj.name);
+};
 
-  watch(
-    () => error.value,
-    () => {
-      console.log(error);
-    },
-  );
-
-  watch(
-    () => data.value,
-    () => {
-      tags.value = data.value.map((obj) => obj.name);
-    },
-  );
+const getTags = (data) => {
+  tags.value = data.value.map((obj) => obj.name);
 };
 
 const onKeyDown = (e) => {
@@ -186,19 +167,69 @@ const onKeyDown = (e) => {
 
 const onFileChange = (event) => {
   const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log(e.target.result);
-      draft.value.image = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
+  draft.value.file_name = file.name;
+  imageFile.value = file;
+};
+
+const uploadFile = () => {
+  const formData = new FormData();
+
+  const uuid = uuidv7();
+  const ext = draft.value.file_name.split('.')[1];
+  const newFileName = `${uuid}.${ext}`;
+  draft.value.file_name = newFileName;
+
+  formData.append('file', imageFile.value, newFileName);
+
+  const { data, error } = useFetch('/upload', {
+    headers: {},
+    method: 'POST',
+    body: formData,
+  });
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      if (data && data.value) {
+        console.log(data.value);
+      }
+    },
+  );
+};
+
+const postNovel = () => {
+  const { data, error } = useFetch('/novels', {
+    method: 'POST',
+    body: JSON.stringify(draft.value),
+  });
+
+  watch(
+    () => error.value,
+    () => {
+      console.log(error);
+    },
+  );
+
+  watch(
+    () => data.value,
+    () => {
+      if (data && data.value) {
+        console.log(data.value);
+      }
+    },
+  );
 };
 
 const submit = () => {
-  console.log('Submit!');
-  console.log(draft.value);
+  uploadFile();
+  postNovel();
 };
 </script>
 

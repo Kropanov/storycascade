@@ -15,7 +15,6 @@
       counter
       variant="outlined"
       accept="image/*"
-      @change="onFileChange"
     ></v-file-input>
 
     <h1>{{ $route.params.id }}</h1>
@@ -42,7 +41,9 @@ watch(
   () => data.value,
   () => {
     if (data && data.value) {
-      console.log(data.value);
+      console.log(data.value.res);
+      imageSrc.value = data.value.res;
+      console.log(imageSrc.value);
     }
   },
 );
