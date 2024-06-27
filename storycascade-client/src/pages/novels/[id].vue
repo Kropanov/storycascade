@@ -8,15 +8,6 @@
       </template>
     </v-img>
 
-    <v-file-input
-      label="File input"
-      class="w-33 mt-3"
-      show-size
-      counter
-      variant="outlined"
-      accept="image/*"
-    ></v-file-input>
-
     <h1>{{ $route.params.id }}</h1>
     <h1>id: {{ id }}</h1>
     <h1>name: {{ novel }}</h1>
@@ -28,11 +19,12 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useFetch } from '@/utils/fetch';
 
-const route = useRoute();
-const url = ref('/novels/');
 const imageSrc = ref('');
 
+const route = useRoute();
 const [id, novel] = route.params.id.split('-');
+
+const url = ref('/novels/');
 url.value = url.value + id;
 
 const { data, error } = useFetch(url);
@@ -41,9 +33,8 @@ watch(
   () => data.value,
   () => {
     if (data && data.value) {
-      console.log(data.value.res);
-      imageSrc.value = data.value.res;
-      console.log(imageSrc.value);
+      console.log(data.value);
+      imageSrc.value = data.value.image.res;
     }
   },
 );
