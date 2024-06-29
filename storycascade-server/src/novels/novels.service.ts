@@ -87,7 +87,6 @@ export class NovelsService {
     const novel = res.rows[0];
 
     const country = await this.countriesService.findOne(novel.country_id);
-    console.log(country);
     const image = await this.s3Service.getFile(`novels/posters/${novel.poster_id}`);
 
     return {

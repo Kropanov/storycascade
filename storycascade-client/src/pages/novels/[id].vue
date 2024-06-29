@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row justify="center" class="mt-4">
-      <v-col class="d-flex border-thin rounded" cols="12" sm="10" md="8" lg="6">
+      <v-col class="d-flex" cols="12" sm="10" md="8" lg="6">
         <div class="mr-3">
           <v-img class="rounded" :src="imageSrc" width="250" height="310" max-height="500" cover>
             <template v-slot:placeholder>
@@ -26,9 +26,19 @@
 
           <v-divider class="mb-5" length="100" />
 
-          <div class="text-mono font-weight-thin">Country: {{ novel.country[0].name }}</div>
-          <div class="text-mono font-weight-thin">Author: mung mung kim</div>
-          <div class="text-mono font-weight-thin">Translator: Yenmazin g</div>
+          <div v-if="novel.country !== undefined" class="text-body-2 font-weight-regular">
+            Country: {{ novel.country[0].name }}
+          </div>
+          <div class="text-body-2 font-weight-regular">Author: mung mung kim</div>
+          <div class="text-body-2 font-weight-regular">Translator: Yenmazin g</div>
+
+          <div class="d-flex mt-3">
+            <v-divider class="mr-2 border-opacity-100" color="info" vertical></v-divider>
+            <div :class="{ expanded: isExpanded }" class="text-body-2 description">{{ novel.description }}</div>
+          </div>
+          <div @click="isExpanded = !isExpanded" class="text-caption cursor-pointer">
+            {{ isExpanded ? 'show less' : 'show more' }}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -51,6 +61,7 @@ url.value = url.value + id;
 const { data, error } = useFetch(url);
 
 const novel = ref({});
+const isExpanded = ref(false);
 
 watch(
   () => data.value,
@@ -73,4 +84,14 @@ watch(
 );
 </script>
 
-<style scoped></style>
+<style scoped>
+.description {
+  overflow: hidden;
+  height: 120px;
+}
+
+.description.expanded {
+  white-space: normal;
+  height: auto;
+}
+</style>
