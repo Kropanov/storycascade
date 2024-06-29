@@ -26,7 +26,7 @@
 
           <v-divider class="mb-5" length="100" />
 
-          <div class="text-mono font-weight-thin">Country: {{ novel.country_id }}</div>
+          <div class="text-mono font-weight-thin">Country: {{ novel.country[0].name }}</div>
           <div class="text-mono font-weight-thin">Author: mung mung kim</div>
           <div class="text-mono font-weight-thin">Translator: Yenmazin g</div>
         </div>
