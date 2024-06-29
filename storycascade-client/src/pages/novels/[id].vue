@@ -27,7 +27,12 @@
           <v-divider class="mb-5" length="100" />
 
           <div v-if="novel.country !== undefined" class="text-body-2 font-weight-regular">
-            Country: {{ novel.country[0].name }}
+            Country:
+            <v-tooltip :text="novel.country[0].name" top>
+              <template v-slot:activator="{ props }">
+                <span v-bind="props" :class="[countryCode]"></span>
+              </template>
+            </v-tooltip>
           </div>
           <div class="text-body-2 font-weight-regular">Author: mung mung kim</div>
           <div class="text-body-2 font-weight-regular">Translator: Yenmazin g</div>
@@ -50,6 +55,8 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useFetch } from '@/utils/fetch';
 
+import '/node_modules/flag-icons/css/flag-icons.min.css';
+
 const imageSrc = ref('');
 
 const route = useRoute();
@@ -61,6 +68,8 @@ url.value = url.value + id;
 const { data, error } = useFetch(url);
 
 const novel = ref({});
+const countryCode = ref('');
+
 const isExpanded = ref(false);
 
 watch(
@@ -69,6 +78,7 @@ watch(
     if (data && data.value) {
       novel.value = data.value;
       console.log(novel.value);
+      countryCode.value = 'fi fi-' + novel.value.country[0].code.toLowerCase();
       imageSrc.value = data.value.image.res;
     }
   },
