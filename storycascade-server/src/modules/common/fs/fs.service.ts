@@ -5,7 +5,7 @@ import * as path from 'path';
 @Injectable()
 export class FileService {
   private getFilePath(fileName: string) {
-    return path.join(__dirname, '../../..', 'src', 'upload', 'files', fileName);
+    return path.join(__dirname, '../../../..', 'src', 'modules', 'upload', 'files', fileName);
   }
 
   async getFile(fileName: string) {

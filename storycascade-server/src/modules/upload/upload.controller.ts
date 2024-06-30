@@ -9,7 +9,7 @@ export class UploadController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './src/upload/files',
+        destination: './src/modules/upload/files',
         filename: (_req, file, callback) => {
           const ext = extname(file.originalname);
           const name = basename(file.originalname, ext);
