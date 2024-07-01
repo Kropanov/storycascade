@@ -1,9 +1,14 @@
 import { Exclude, Expose } from 'class-transformer';
-import { IsDefined, IsString } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsDefined, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 @Exclude()
 export class CreateUserDTO {
+  @Expose()
+  @IsOptional()
+  @ApiPropertyOptional({ type: Number })
+  id?: number;
+
   @Expose()
   @IsString()
   @IsDefined()
