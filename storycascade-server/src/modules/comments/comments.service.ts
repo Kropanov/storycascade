@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CreateCommentDTO } from './dto/create-comment.dto';
+import { UpdateCommentDTO } from './dto/update-comment.dto';
 import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
@@ -11,8 +11,8 @@ export class CommentsService {
     this.postgres = new PostgresService();
   }
 
-  async create(createCommentDto: CreateCommentDto) {
-    const { userId, novelsId, parentCommentId, content } = createCommentDto;
+  async create(body: CreateCommentDTO) {
+    const { userId, novelsId, parentCommentId, content } = body;
     const res = await this.postgres.query(
       'INSERT INTO comments (user_id, novels_id, parent_comment_id, content) VALUES ($1, $2, $3, $4)',
       [userId, novelsId, parentCommentId, content],
@@ -30,8 +30,8 @@ export class CommentsService {
     return res.rows[0];
   }
 
-  async update(id: number, updateCommentDto: UpdateCommentDto) {
-    const { userId, novelsId, parentCommentId, content } = updateCommentDto;
+  async update(id: number, body: UpdateCommentDTO) {
+    const { userId, novelsId, parentCommentId, content } = body;
     return await this.postgres.query(
       'UPDATE comments SET user_id = $1, novels_id = $2, parent_comment_id = $3, content = $4 WHERE id = $5',
       [userId, novelsId, parentCommentId, content, id],

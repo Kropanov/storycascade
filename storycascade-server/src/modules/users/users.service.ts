@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
@@ -11,12 +11,11 @@ export class UsersService {
     this.postgres = new PostgresService();
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const { username, email, password_hash } = createUserDto;
+  async create(body: CreateUserDTO) {
     await this.postgres.query('INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3)', [
-      username,
-      email,
-      password_hash,
+      body.username,
+      body.email,
+      body.password_hash,
     ]);
 
     return { message: 'User was created!' };
@@ -27,7 +26,7 @@ export class UsersService {
     return res.rows;
   }
 
-  async findOne(identifier: number | string, type: 'id' | 'email' | 'name'): Promise<CreateUserDto> {
+  async findOne(identifier: number | string, type: 'id' | 'email' | 'name') {
     const queryMap = {
       id: 'SELECT id, username, email FROM users WHERE id = $1',
       email: 'SELECT * FROM users WHERE email = $1',
@@ -44,12 +43,11 @@ export class UsersService {
     return res.rows[0];
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    const { username, email, password_hash } = updateUserDto;
+  async update(id: number, body: UpdateUserDTO) {
     await this.postgres.query('UPDATE users SET username = $1, email = $2, password_hash = $3 WHERE id = $4', [
-      username,
-      email,
-      password_hash,
+      body.username,
+      body.email,
+      body.password_hash,
       id,
     ]);
 

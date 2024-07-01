@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateNovelDto } from './dto/create-novel.dto';
-import { UpdateNovelDto } from './dto/update-novel.dto';
+import { CreateNovelDTO } from './dto/create-novel.dto';
+import { UpdateNovelDTO } from './dto/update-novel.dto';
 import { PostgresService } from '../common/database/database.service';
 import { CountriesService } from '../countries/countries.service';
 import { StatesService } from '../states/states.service';
@@ -26,8 +26,8 @@ export class NovelsService {
     this.fileService = new FileService();
   }
 
-  async create(createNovelDto: CreateNovelDto) {
-    const { title, other_titles, description, chapters, state, country, genres, tags, file_name } = createNovelDto;
+  async create(body: CreateNovelDTO) {
+    const { title, other_titles, description, chapters, state, country, genres, tags, file_name } = body;
 
     const state_id = await this.statesService.getIdByName(state);
     const country_id = await this.countriesService.findOneByName(country);
@@ -96,8 +96,8 @@ export class NovelsService {
     };
   }
 
-  async update(_id: number, updateNovelDto: UpdateNovelDto) {
-    const { title, other_titles, description, chapters, state, country } = updateNovelDto;
+  async update(_id: number, body: UpdateNovelDTO) {
+    const { title, other_titles, description, chapters, state, country } = body;
     return await this.postgres.query(
       'UPDATE novels SET title = $1, other_titles = $2, description = $3, chapters = $4, state_id = $5, country_id = $6 WHERE id = $7',
       [title, other_titles, description, chapters, state, country, _id],

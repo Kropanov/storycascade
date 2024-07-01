@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGenreDto } from './dto/create-genre.dto';
-import { UpdateGenreDto } from './dto/update-genre.dto';
+import { CreateGenreDTO } from './dto/create-genre.dto';
+import { UpdateGenreDTO } from './dto/update-genre.dto';
 import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
@@ -11,9 +11,8 @@ export class GenresService {
     this.postgres = new PostgresService();
   }
 
-  async create(createGenreDto: CreateGenreDto) {
-    const { name } = createGenreDto;
-    const res = await this.postgres.query('INSERT INTO genres (name) VALUES ($1)', [name]);
+  async create(body: CreateGenreDTO) {
+    const res = await this.postgres.query('INSERT INTO genres (name) VALUES ($1)', [body.name]);
     return res.rows;
   }
 
@@ -27,9 +26,8 @@ export class GenresService {
     return res.rows;
   }
 
-  async update(id: number, updateGenreDto: UpdateGenreDto) {
-    const { name } = updateGenreDto;
-    const res = await this.postgres.query('UPDATE genres SET name = $1 WHERE id = $2', [name, id]);
+  async update(id: number, body: UpdateGenreDTO) {
+    const res = await this.postgres.query('UPDATE genres SET name = $1 WHERE id = $2', [body.name, id]);
     return res.rows;
   }
 

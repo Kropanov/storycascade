@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTagDto } from './dto/create-tag.dto';
-import { UpdateTagDto } from './dto/update-tag.dto';
+import { CreateTagDTO } from './dto/create-tag.dto';
+import { UpdateTagDTO } from './dto/update-tag.dto';
 import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
@@ -11,9 +11,8 @@ export class TagsService {
     this.postgres = new PostgresService();
   }
 
-  async create(createTagDto: CreateTagDto) {
-    const { name } = createTagDto;
-    return this.postgres.query('INSERT INTO tags (name) VALUES ($1)', [name]);
+  async create(body: CreateTagDTO) {
+    return this.postgres.query('INSERT INTO tags (name) VALUES ($1)', [body.name]);
   }
 
   async findAll() {
@@ -26,9 +25,8 @@ export class TagsService {
     return res.rows[0];
   }
 
-  async update(id: number, updateTagDto: UpdateTagDto) {
-    const { name } = updateTagDto;
-    return await this.postgres.query('UPDATE tags SET name = $1 WHERE id = $2', [name, id]);
+  async update(id: number, body: UpdateTagDTO) {
+    return await this.postgres.query('UPDATE tags SET name = $1 WHERE id = $2', [body.name, id]);
   }
 
   async remove(id: number) {

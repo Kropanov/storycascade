@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStateDto } from './dto/create-state.dto';
-import { UpdateStateDto } from './dto/update-state.dto';
+import { CreateStateDTO } from './dto/create-state.dto';
+import { UpdateStateDTO } from './dto/update-state.dto';
 import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
@@ -11,11 +11,10 @@ export class StatesService {
     this.postgres = new PostgresService();
   }
 
-  async create(createStateDto: CreateStateDto) {
-    const { name, description } = createStateDto;
+  async create(body: CreateStateDTO) {
     const res = await this.postgres.query('INSERT INTO states (name, description) VALUES ($1, $2)', [
-      name,
-      description,
+      body.name,
+      body.description,
     ]);
     return res.rows;
   }
@@ -30,11 +29,10 @@ export class StatesService {
     return res.rows[0];
   }
 
-  async update(id: number, updateStateDto: UpdateStateDto) {
-    const { name, description } = updateStateDto;
+  async update(id: number, body: UpdateStateDTO) {
     const res = await this.postgres.query('UPDATE states SET name = $1, description = $2 WHERE id = $3', [
-      name,
-      description,
+      body.name,
+      body.description,
       id,
     ]);
     return res.rows;
