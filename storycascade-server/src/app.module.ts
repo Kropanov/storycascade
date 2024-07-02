@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { NovelsModule } from './novels/novels.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { DatabaseModule } from './common/database/database.module';
-import { CommentsModule } from './comments/comments.module';
-import { S3Module } from './common/s3/s3.module';
-import { CountriesModule } from './countries/countries.module';
-import { GenresModule } from './genres/genres.module';
-import { TagsModule } from './tags/tags.module';
-import { StatesModule } from './states/states.module';
-import { UploadModule } from './upload/upload.module';
+import { NovelsModule } from './modules/novels/novels.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CommentsModule } from './modules/comments/comments.module';
+import { CountriesModule } from './modules/countries/countries.module';
+import { GenresModule } from './modules/genres/genres.module';
+import { TagsModule } from './modules/tags/tags.module';
+import { StatesModule } from './modules/states/states.module';
+import { UploadModule } from './modules/upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { FileModule } from './common/fs/fs.module';
+import { FileModule } from './modules/common/fs/fs.module';
+import { DatabaseModule } from './modules/common/database/database.module';
+import { S3Module } from './modules/common/s3/s3.module';
 
 @Module({
   imports: [

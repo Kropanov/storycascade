@@ -19,10 +19,7 @@
           <div class="text-h4 mt-1">{{ novel.title }}</div>
           <div class="text-subtitle-2 font-weight-light">{{ novel.other_titles }}</div>
 
-          <div class="d-flex">
-            <div class="mr-3 text-green-accent-1">8.33</div>
-            <div class="text-subtitle-2">1008</div>
-          </div>
+          <NovelRating />
 
           <v-divider class="mb-5" length="100" />
 
@@ -37,7 +34,8 @@
           <div class="text-body-2 font-weight-regular">Author: mung mung kim</div>
           <div class="text-body-2 font-weight-regular">Translator: Yenmazin g</div>
 
-          <div class="d-flex mt-3">
+          <div v-if="!novel.description" class="text-body-2 font-weight-regular">No description</div>
+          <div v-else class="d-flex mt-3">
             <v-divider class="mr-2 border-opacity-100" color="info" vertical></v-divider>
             <div :class="{ expanded: isExpanded }" class="text-body-2 description">{{ novel.description }}</div>
           </div>
@@ -56,6 +54,7 @@ import { useRoute } from 'vue-router';
 import { useFetch } from '@/utils/fetch';
 
 import '/node_modules/flag-icons/css/flag-icons.min.css';
+import NovelRating from '@/components/NovelRating.vue';
 
 const imageSrc = ref('');
 
@@ -79,7 +78,7 @@ watch(
       novel.value = data.value;
       console.log(novel.value);
       countryCode.value = 'fi fi-' + novel.value.country[0].code.toLowerCase();
-      imageSrc.value = data.value.image.res;
+      imageSrc.value = data.value.image;
     }
   },
 );

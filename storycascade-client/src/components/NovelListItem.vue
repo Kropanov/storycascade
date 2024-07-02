@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-img
-      :src="novel.image.res"
+      :src="novel.image"
       class="align-end"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       height="250px"
