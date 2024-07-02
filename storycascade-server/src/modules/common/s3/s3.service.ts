@@ -36,7 +36,7 @@ export class S3Service {
       const buffer = await this.streamToBuffer(data.Body as Readable);
       const base64Data = buffer.toString('base64');
       const mimeType = data.ContentType;
-      return { res: `data:${mimeType};base64,${base64Data}` };
+      return `data:${mimeType};base64,${base64Data}`;
     } catch (err) {
       throw err;
     }

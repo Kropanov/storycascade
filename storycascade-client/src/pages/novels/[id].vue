@@ -78,7 +78,7 @@ watch(
       novel.value = data.value;
       console.log(novel.value);
       countryCode.value = 'fi fi-' + novel.value.country[0].code.toLowerCase();
-      imageSrc.value = data.value.image.res;
+      imageSrc.value = data.value.image;
     }
   },
 );
