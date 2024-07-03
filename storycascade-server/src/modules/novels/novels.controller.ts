@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { NovelsService } from './novels.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+
 import { CreateNovelDTO } from './dto/create-novel.dto';
 import { UpdateNovelDTO } from './dto/update-novel.dto';
+import { NovelsService } from './novels.service';
 
 @Controller('novels')
 export class NovelsController {

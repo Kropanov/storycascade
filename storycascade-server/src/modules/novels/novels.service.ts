@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
+import { FileService } from '../common/fs/fs.service';
+import { S3Service } from '../common/s3/s3.service';
+import { CountriesService } from '../countries/countries.service';
+import { GenresService } from '../genres/genres.service';
+import { StatesService } from '../states/states.service';
+import { TagsService } from '../tags/tags.service';
 import { CreateNovelDTO } from './dto/create-novel.dto';
 import { UpdateNovelDTO } from './dto/update-novel.dto';
-import { PostgresService } from '../common/database/database.service';
-import { CountriesService } from '../countries/countries.service';
-import { StatesService } from '../states/states.service';
-import { GenresService } from '../genres/genres.service';
-import { TagsService } from '../tags/tags.service';
-import { S3Service } from '../common/s3/s3.service';
-import { FileService } from '../common/fs/fs.service';
 
 @Injectable()
 export class NovelsService {

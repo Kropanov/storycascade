@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
 import { CreateCommentDTO } from './dto/create-comment.dto';
 import { UpdateCommentDTO } from './dto/update-comment.dto';
-import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
 export class CommentsService {

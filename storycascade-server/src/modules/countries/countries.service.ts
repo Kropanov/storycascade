@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
 import { CreateCountryDTO } from './dto/create-country.dto';
 import { UpdateCountryDTO } from './dto/update-country.dto';
-import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
 export class CountriesService {

@@ -1,6 +1,6 @@
-import { Pool } from 'pg';
-import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
+import * as fs from 'fs';
+import { Pool } from 'pg';
 
 @Injectable()
 export class PostgresService {

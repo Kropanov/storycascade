@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
 import { CreateGenreDTO } from './dto/create-genre.dto';
 import { UpdateGenreDTO } from './dto/update-genre.dto';
-import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
 export class GenresService {
