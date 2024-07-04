@@ -45,6 +45,35 @@
         </div>
       </v-col>
     </v-row>
+    <v-row justify="center">
+      <v-col class="d-flex" cols="12" sm="10" md="8" lg="6">
+        <v-tabs v-model="tab" fixed-tabs>
+          <v-tab text="About" value="about"></v-tab>
+          <v-tab text="Chapters" value="chapters"></v-tab>
+        </v-tabs>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col class="d-flex" cols="12" sm="10" md="8" lg="6">
+        <v-tabs-window v-model="tab">
+          <v-tabs-window-item value="about">
+            <div v-if="novel" class="d-flex">
+              <v-divider class="mr-2 ml-2 border-opacity-100" color="warning" vertical></v-divider>
+              <div>
+                <div class="text-body-2">
+                  Chapters:
+                  <span class="text-body-2">{{ novel.chapters }}</span>
+                </div>
+                <div class="text-body-2">Date of release: {{ new Date(novel.created_at).getFullYear() }}</div>
+              </div>
+            </div>
+
+            <v-chip class="mt-4" variant="outlined">genres</v-chip>
+          </v-tabs-window-item>
+          <v-tabs-window-item value="chapters"> Chapters </v-tabs-window-item>
+        </v-tabs-window>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -67,6 +96,7 @@ url.value = url.value + id;
 const { data, error } = useFetch(url);
 
 const novel = ref({});
+const tab = ref('option-1');
 const countryCode = ref('');
 
 const isExpanded = ref(false);
