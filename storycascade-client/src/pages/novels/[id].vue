@@ -13,34 +13,63 @@
           <v-btn class="mt-2" variant="outlined" width="100%">Start reading</v-btn>
         </div>
 
-        <div>
-          <v-chip variant="outlined" size="small">ongoing</v-chip>
+        <div class="d-flex flex-column w-100">
+          <v-skeleton-loader
+            class="mb-3"
+            :elevation="24"
+            width="100%"
+            v-if="loading"
+            type="article"
+          ></v-skeleton-loader>
 
-          <div class="text-h4 mt-1">{{ novel.title }}</div>
-          <div class="text-subtitle-2 font-weight-light">{{ novel.other_titles }}</div>
+          <div v-else>
+            <v-chip variant="outlined" size="small">ongoing</v-chip>
 
-          <NovelRating />
+            <div class="text-h4 mt-1">{{ novel.title }}</div>
+            <div class="text-subtitle-2 font-weight-light">{{ novel.other_titles }}</div>
 
-          <v-divider class="mb-5" length="100" />
-
-          <div v-if="novel.country !== undefined" class="text-body-2 font-weight-regular">
-            Country:
-            <v-tooltip :text="novel.country[0].name" top>
-              <template v-slot:activator="{ props }">
-                <span v-bind="props" :class="[countryCode]"></span>
-              </template>
-            </v-tooltip>
+            <NovelRating />
+            <v-divider class="mb-5" length="100" />
           </div>
-          <div class="text-body-2 font-weight-regular">Author: mung mung kim</div>
-          <div class="text-body-2 font-weight-regular">Translator: Yenmazin g</div>
 
-          <div v-if="!novel.description" class="text-body-2 font-weight-regular">No description</div>
-          <div v-else class="d-flex mt-3">
-            <v-divider class="mr-2 border-opacity-100" color="info" vertical></v-divider>
-            <div :class="{ expanded: isExpanded }" class="text-body-2 description">{{ novel.description }}</div>
+          <v-skeleton-loader
+            class="mb-3"
+            :elevation="24"
+            width="100%"
+            v-if="loading"
+            type="paragraph"
+          ></v-skeleton-loader>
+
+          <div v-else>
+            <div v-if="novel.country !== undefined" class="text-body-2 font-weight-regular">
+              Country:
+              <v-tooltip :text="novel.country[0].name" top>
+                <template v-slot:activator="{ props }">
+                  <span v-bind="props" :class="[countryCode]"></span>
+                </template>
+              </v-tooltip>
+            </div>
+            <div class="text-body-2 font-weight-regular">Author: mung mung kim</div>
+            <div class="text-body-2 font-weight-regular">Translator: Yenmazin g</div>
           </div>
-          <div @click="isExpanded = !isExpanded" class="text-caption cursor-pointer">
-            {{ isExpanded ? 'show less' : 'show more' }}
+
+          <v-skeleton-loader
+            class="mb-3"
+            :elevation="24"
+            width="100%"
+            v-if="loading"
+            type="paragraph"
+          ></v-skeleton-loader>
+
+          <div v-else>
+            <div v-if="!novel.description" class="text-body-2 font-weight-regular">No description</div>
+            <div v-else class="d-flex mt-3">
+              <v-divider class="mr-2 border-opacity-100" color="info" vertical></v-divider>
+              <div :class="{ expanded: isExpanded }" class="text-body-2 description">{{ novel.description }}</div>
+            </div>
+            <div @click="isExpanded = !isExpanded" class="text-caption cursor-pointer">
+              {{ isExpanded ? 'show less' : 'show more' }}
+            </div>
           </div>
         </div>
       </v-col>
@@ -100,6 +129,7 @@ const tab = ref('option-1');
 const countryCode = ref('');
 
 const isExpanded = ref(false);
+const loading = ref(true);
 
 watch(
   () => data.value,
@@ -109,6 +139,7 @@ watch(
       console.log(novel.value);
       countryCode.value = 'fi fi-' + novel.value.country[0].code.toLowerCase();
       imageSrc.value = data.value.image;
+      loading.value = false;
     }
   },
 );
