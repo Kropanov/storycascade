@@ -97,7 +97,9 @@
               </div>
             </div>
 
-            <v-chip class="mt-4" variant="outlined">genres</v-chip>
+            <v-chip-group class="mt-3">
+              <v-chip v-for="genre in novel.genres" :key="genre.name" variant="outlined"> {{ genre.name }} </v-chip>
+            </v-chip-group>
           </v-tabs-window-item>
           <v-tabs-window-item value="chapters"> Chapters </v-tabs-window-item>
         </v-tabs-window>

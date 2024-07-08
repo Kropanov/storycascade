@@ -48,4 +48,12 @@ export class GenresService {
     ]);
     return res.rows;
   }
+
+  async getGenresByNovelId(novel_id: number) {
+    const res = await this.postgres.query(
+      'SELECT genres.name FROM novel_genre INNER JOIN genres ON novel_genre.genre_id = genres.id WHERE novel_id = $1',
+      [novel_id],
+    );
+    return res.rows;
+  }
 }
