@@ -86,7 +86,7 @@
       <v-col class="d-flex" cols="12" sm="10" md="8" lg="6">
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="about">
-            <div v-if="novel" class="d-flex">
+            <div v-if="novel && !loading" class="d-flex">
               <v-divider class="mr-2 ml-2 border-opacity-100" color="warning" vertical></v-divider>
               <div>
                 <div class="text-body-2">

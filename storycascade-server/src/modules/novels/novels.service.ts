@@ -34,7 +34,7 @@ export class NovelsService {
     const country_id = await this.countriesService.findOneByName(country);
 
     const res = await this.postgres.query(
-      'INSERT INTO novels (title, other_titles, description, chapters, state_id, country_id, poster_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;',
+      'INSERT INTO novels (title, other_titles, description, chapters, state_id, country_id, image_key) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;',
       [title, other_titles[0], description, chapters, state_id, country_id, file_name],
     );
 
@@ -69,7 +69,7 @@ export class NovelsService {
     const novels = res.rows;
     return await Promise.all(
       novels.map(async (novel) => {
-        const image = await this.s3Service.getFile(`novels/posters/${novel.poster_id}`);
+        const image = await this.s3Service.getFile(`novels/posters/${novel.image_key}`);
         return {
           ...novel,
           image,
@@ -88,7 +88,7 @@ export class NovelsService {
     const novel = res.rows[0];
 
     const country = await this.countriesService.findOne(novel.country_id);
-    const image = await this.s3Service.getFile(`novels/posters/${novel.poster_id}`);
+    const image = await this.s3Service.getFile(`novels/posters/${novel.image_key}`);
 
     const genres = await this.genresService.getGenresByNovelId(novel.id);
 
