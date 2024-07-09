@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
 import { CreateGenreDTO } from './dto/create-genre.dto';
 import { UpdateGenreDTO } from './dto/update-genre.dto';
-import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
 export class GenresService {
@@ -45,6 +46,14 @@ export class GenresService {
       novel_id,
       genre_id,
     ]);
+    return res.rows;
+  }
+
+  async getGenresByNovelId(novel_id: number) {
+    const res = await this.postgres.query(
+      'SELECT genres.name FROM novel_genre INNER JOIN genres ON novel_genre.genre_id = genres.id WHERE novel_id = $1',
+      [novel_id],
+    );
     return res.rows;
   }
 }

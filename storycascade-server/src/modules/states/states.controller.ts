@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { StatesService } from './states.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+
 import { CreateStateDTO } from './dto/create-state.dto';
 import { UpdateStateDTO } from './dto/update-state.dto';
+import { StatesService } from './states.service';
 
 @Controller('states')
 export class StatesController {

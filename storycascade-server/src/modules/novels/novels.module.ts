@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { NovelsService } from './novels.service';
-import { NovelsController } from './novels.controller';
+
 import { CountriesModule } from '../countries/countries.module';
-import { StatesModule } from '../states/states.module';
 import { GenresModule } from '../genres/genres.module';
+import { StatesModule } from '../states/states.module';
 import { TagsModule } from '../tags/tags.module';
+import { NovelsController } from './novels.controller';
+import { NovelsService } from './novels.service';
 
 @Module({
   controllers: [NovelsController],

@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import { PostgresService } from '../common/database/database.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { PostgresService } from '../common/database/database.service';
 
 @Injectable()
 export class UsersService {
