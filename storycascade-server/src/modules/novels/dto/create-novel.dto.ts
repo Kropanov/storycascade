@@ -12,8 +12,8 @@ export class CreateNovelDTO {
 
   @Expose()
   @IsOptional()
-  @ApiPropertyOptional({ type: String })
-  other_titles: string | null;
+  @ApiPropertyOptional({ type: Array<string> })
+  other_titles: Array<string> | null;
 
   @Expose()
   @IsString()

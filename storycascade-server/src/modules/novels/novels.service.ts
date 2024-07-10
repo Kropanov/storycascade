@@ -30,12 +30,14 @@ export class NovelsService {
   async create(body: CreateNovelDTO) {
     const { title, other_titles, description, chapters, state, country, genres, tags, file_name } = body;
 
+    const titles = other_titles.join();
+
     const state_id = await this.statesService.getIdByName(state);
     const country_id = await this.countriesService.findOneByName(country);
 
     const res = await this.postgres.query(
       'INSERT INTO novels (title, other_titles, description, chapters, state_id, country_id, image_key) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;',
-      [title, other_titles[0], description, chapters, state_id, country_id, file_name],
+      [title, titles, description, chapters, state_id, country_id, file_name],
     );
 
     if (res.rows.length > 0) {

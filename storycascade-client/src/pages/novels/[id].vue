@@ -26,7 +26,15 @@
             <v-chip variant="outlined" size="small">ongoing</v-chip>
 
             <div class="text-h4 mt-1">{{ novel.title }}</div>
-            <div class="text-subtitle-2 font-weight-light">{{ novel.other_titles }}</div>
+            <v-chip-group>
+              <v-chip
+                v-for="title in novel.other_titles.split(',')"
+                :key="title"
+                class="text-subtitle-2 font-weight-light"
+              >
+                {{ title }}
+              </v-chip>
+            </v-chip-group>
 
             <NovelRating />
             <v-divider class="mb-5" length="100" />
