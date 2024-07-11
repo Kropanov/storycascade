@@ -32,8 +32,8 @@ def make_migration(target):
                 w.write(context)
         print('--------------------MIGRATION IS DONE SUCCESSFULLY--------------------')
     except Exception as exc:
-        print('--------------------MIGRATION IS FAILED--------------------')
         print(exc)
+        print('--------------------MIGRATION IS FAILED--------------------')
     finally:
         w.close()
 
