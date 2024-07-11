@@ -108,6 +108,10 @@
             <v-chip-group class="mt-3">
               <v-chip v-for="genre in novel.genres" :key="genre.name" variant="outlined"> {{ genre.name }} </v-chip>
             </v-chip-group>
+
+            <v-chip-group class="mt-1">
+              <v-chip v-for="tag in novel.tags" :key="tag.name" variant="outlined"> {{ tag.name }} </v-chip>
+            </v-chip-group>
           </v-tabs-window-item>
           <v-tabs-window-item value="chapters"> Chapters </v-tabs-window-item>
         </v-tabs-window>

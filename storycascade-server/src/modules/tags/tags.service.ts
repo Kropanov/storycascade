@@ -46,4 +46,12 @@ export class TagsService {
     ]);
     return res.rows;
   }
+
+  async getTagsByNovelId(novel_id: number) {
+    const res = await this.postgres.query(
+      'SELECT tags.name FROM novel_tags INNER JOIN tags ON novel_tags.tag_id = tags.id WHERE novel_id = $1',
+      [novel_id],
+    );
+    return res.rows;
+  }
 }

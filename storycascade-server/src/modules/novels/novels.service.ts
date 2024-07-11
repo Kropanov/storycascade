@@ -89,15 +89,17 @@ export class NovelsService {
 
     const novel = res.rows[0];
 
+    const tags = await this.tagsService.getTagsByNovelId(novel.id);
+    const genres = await this.genresService.getGenresByNovelId(novel.id);
     const country = await this.countriesService.findOne(novel.country_id);
+
     const image = await this.s3Service.getFile(`novels/posters/${novel.image_key}`);
 
-    const genres = await this.genresService.getGenresByNovelId(novel.id);
-
     return {
+      tags,
       image,
-      country,
       genres,
+      country,
       ...novel,
     };
   }
